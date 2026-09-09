@@ -9,10 +9,11 @@
     body {
         margin: 0;
         padding-top: 70px;
-        background: #0a0a0a;
+        background: #0a0a0a url('https://www.transparenttextures.com/patterns/asanoha.png'); /* ★中華背景追加 */
         color: white;
         font-family: "Noto Sans JP", sans-serif;
         overflow-x: hidden;
+        background-size: 600px; /* パターンの大きさ調整 */
     }
 
     /* 固定ヘッダー */
@@ -56,7 +57,7 @@
         height: 100vh;
         display: flex;
         justify-content: center;
-        align-items: flex-start; /* ← 上にくっつける */
+        align-items: flex-start;
         padding-top: 40px;
     }
     .hero img {
@@ -75,19 +76,19 @@
         position: relative;
     }
 
-    /* 画像の後ろの白い太い帯（透かし無し） */
+    /* 画像の後ろの白い太い帯 */
     .image-backdrop {
         position: absolute;
         right: 0;
         top: 120px;
         width: 55%;
-        height: 60%; /* ← ABOUT の縦幅を揃えるために調整 */
+        height: 60%;
         background: #ffffff;
         border-radius: 20px;
         z-index: -1;
     }
 
-    /* セクション番号（濃いグレー） */
+    /* セクション番号 */
     .section-number {
         font-size: 48px;
         font-weight: 800;
@@ -100,20 +101,20 @@
         z-index: 2;
     }
 
-    /* タイトルの後ろの黄色帯（文字に重なるように修正） */
+    /* タイトルの後ろの黄色帯 */
     .big-title-box {
         position: absolute;
         left: 0;
-        top: 20px; /* ← 文字に重なるように上へ詰める */
+        top: 20px;
         width: 70%;
-        height: 180px; /* ← 文字にフィットする高さ */
+        height: 180px;
         background: linear-gradient(90deg, #ffe27a 0%, #f5d76e 50%, #eac55f 100%);
         opacity: 1;
         border-radius: 10px;
         z-index: 1;
     }
 
-    /* 巨大タイトル（濃いグレー） */
+    /* 巨大タイトル */
     .big-title {
         font-size: 120px;
         font-weight: 900;
@@ -133,7 +134,7 @@
         transform: translateY(0);
     }
 
-    /* 説明文（濃いグレー） */
+    /* 説明文 */
     section .text {
         width: 45%;
         font-size: 20px;
@@ -145,12 +146,12 @@
         z-index: 2;
     }
 
-    /* 下だけトリミングする画像（ABOUT用） */
+    /* ABOUT の画像だけ下トリミング */
     .crop-img {
         width: 45%;
-        height: 450px;      /* ← 帯に合わせた高さ */
-        object-fit: cover;  /* ← トリミング有効化 */
-        object-position: top; /* ← 上はそのまま、下だけ切れる */
+        height: 450px;
+        object-fit: cover;
+        object-position: top;
         border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
@@ -159,7 +160,8 @@
         z-index: 2;
     }
 
-    section img:not(.crop-img) {
+    /* 通常画像（WORKSなど） */
+    .normal-img {
         width: 45%;
         border-radius: 10px;
         opacity: 0;
@@ -224,7 +226,6 @@
         </div>
     </div>
 
-    <!-- 下だけトリミングする画像 -->
     <img class="crop-img" src="img/イラスト196.webp" alt="">
 </section>
 
@@ -240,7 +241,9 @@
             <br><a class="more-btn" href="works.html">もっと見る</a>
         </div>
     </div>
-    <img src="img/イラスト14.webp" alt="">
+
+    <!-- ★ WORKS の画像を確実に表示 -->
+    <img class="normal-img" src="img/イラスト14.webp" alt="">
 </section>
 
 <!-- 04 COMMISSION -->
@@ -255,7 +258,7 @@
             <br><a class="more-btn" href="commission.html">もっと見る</a>
         </div>
     </div>
-    <img src="" alt="">
+    <img class="normal-img" src="" alt="">
 </section>
 
 <!-- 05 CONTACT -->
@@ -270,7 +273,7 @@
             <br><a class="more-btn" href="contact.html">もっと見る</a>
         </div>
     </div>
-    <img src="" alt="">
+    <img class="normal-img" src="" alt="">
 </section>
 
 <script>
