@@ -8,7 +8,7 @@
 <style>
     body {
         margin: 0;
-        padding-top: 70px; /* 固定ヘッダー分の余白を追加 */
+        padding-top: 70px;
         background: #0a0a0a;
         color: white;
         font-family: "Noto Sans JP", sans-serif;
@@ -53,13 +53,30 @@
 
     /* セクション共通 */
     section {
-        min-height: 100vh; /* ← ここを修正（表示されない原因だった） */
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 100px 80px;
+        padding: 120px 80px;
         box-sizing: border-box;
         position: relative;
+    }
+
+    /* 巨大タイトル（ゼンゼロ風） */
+    .big-title {
+        font-size: 120px;
+        font-weight: 900;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 1s ease;
+        line-height: 0.9;
+        letter-spacing: -2px;
+        margin-bottom: 40px;
+    }
+
+    .show-title {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     section img {
@@ -71,14 +88,13 @@
     }
 
     section .text {
-        width: 50%;
-        font-size: 32px;
+        width: 45%;
+        font-size: 20px;
         opacity: 0;
         transform: translateX(-50px);
         transition: 1s ease;
     }
 
-    /* スライドイン後の状態 */
     .show-img {
         opacity: 1;
         transform: translateX(0);
@@ -88,7 +104,6 @@
         transform: translateX(0);
     }
 
-    /* もっと見るボタン */
     .more-btn {
         display: inline-block;
         margin-top: 20px;
@@ -103,7 +118,6 @@
         color: black;
     }
 
-    /* 最初のメインビジュアル */
     .hero {
         height: 100vh;
         background: url('img/kv2.webp') center/cover no-repeat;
@@ -133,46 +147,53 @@
 
 <!-- 02 ABOUT -->
 <section id="about">
-    <div class="text">
-        02 ABOUT  
-        <br>あなたのプロフィールや制作スタイルを紹介するセクション
-        <br><a class="more-btn" href="about.html">もっと見る</a>
+    <div class="left">
+        <div class="big-title">ABOUT</div>
+        <div class="text">
+            あなたのプロフィールや制作スタイルを紹介するセクション
+            <br><a class="more-btn" href="about.html">もっと見る</a>
+        </div>
     </div>
     <img src="img/イラスト196.webp" alt="">
 </section>
 
 <!-- 03 WORKS -->
 <section id="works">
-    <div class="text">
-        03 WORKS  
-        <br>イラスト作品一覧を紹介するセクション
-        <br><a class="more-btn" href="works.html">もっと見る</a>
+    <div class="left">
+        <div class="big-title">WORKS</div>
+        <div class="text">
+            イラスト作品一覧を紹介するセクション
+            <br><a class="more-btn" href="works.html">もっと見る</a>
+        </div>
     </div>
     <img src="img/イラスト14.webp" alt="">
 </section>
 
 <!-- 04 COMMISSION -->
 <section id="commission">
-    <div class="text">
-        04 COMMISSION  
-        <br>依頼料金や制作の流れを紹介するセクション
-        <br><a class="more-btn" href="commission.html">もっと見る</a>
+    <div class="left">
+        <div class="big-title">COMMISSION</div>
+        <div class="text">
+            依頼料金や制作の流れを紹介するセクション
+            <br><a class="more-btn" href="commission.html">もっと見る</a>
+        </div>
     </div>
     <img src="" alt="">
 </section>
 
 <!-- 05 CONTACT -->
 <section id="contact">
-    <div class="text">
-        05 CONTACT  
-        <br>依頼フォームや連絡先を紹介するセクション
-        <br><a class="more-btn" href="contact.html">もっと見る</a>
+    <div class="left">
+        <div class="big-title">CONTACT</div>
+        <div class="text">
+            依頼フォームや連絡先を紹介するセクション
+            <br><a class="more-btn" href="contact.html">もっと見る</a>
+        </div>
     </div>
     <img src="" alt="">
 </section>
 
 <script>
-    /* スクロールでスライドイン */
     const sections = document.querySelectorAll("section");
 
     window.addEventListener("scroll", () => {
@@ -180,11 +201,13 @@
             const rect = sec.getBoundingClientRect();
 
             if (rect.top < window.innerHeight && rect.bottom > 0) {
+                sec.querySelector(".big-title").classList.add("show-title");
                 sec.querySelector(".text").classList.add("show-text");
                 sec.querySelector("img").classList.add("show-img");
             }
 
             if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                sec.querySelector(".big-title").classList.remove("show-title");
                 sec.querySelector(".text").classList.remove("show-text");
                 sec.querySelector("img").classList.remove("show-img");
             }
