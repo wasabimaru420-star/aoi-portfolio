@@ -62,6 +62,18 @@
         position: relative;
     }
 
+    /* 画像の後ろの白い太い帯（ゼンゼロ風） */
+    .image-backdrop {
+        position: absolute;
+        right: 0;
+        top: 120px;
+        width: 55%;
+        height: 70%;
+        background: rgba(255,255,255,0.15);
+        border-radius: 20px;
+        z-index: -1;
+    }
+
     /* セクション番号 */
     .section-number {
         font-size: 48px;
@@ -73,7 +85,7 @@
         margin-bottom: 10px;
     }
 
-    /* 巨大タイトルの背景帯（黄色系） */
+    /* タイトルの後ろの黄色帯 */
     .big-title-box {
         position: absolute;
         left: 0;
@@ -103,19 +115,21 @@
         transform: translateY(0);
     }
 
+    /* 説明文（濃いグレー） */
+    section .text {
+        width: 45%;
+        font-size: 20px;
+        color: #d0d0d0; /* ★濃いグレー */
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: 1s ease;
+    }
+
     section img {
         width: 45%;
         border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
-        transition: 1s ease;
-    }
-
-    section .text {
-        width: 45%;
-        font-size: 20px;
-        opacity: 0;
-        transform: translateX(-50px);
         transition: 1s ease;
     }
 
@@ -169,10 +183,9 @@
 
 <div class="hero"></div>
 
-<!-- 01 HOME（heroなので番号は表示しない） -->
-
 <!-- 02 ABOUT -->
 <section id="about">
+    <div class="image-backdrop"></div>
     <div class="left">
         <div class="section-number">02</div>
         <div class="big-title-box"></div>
@@ -187,6 +200,7 @@
 
 <!-- 03 WORKS -->
 <section id="works">
+    <div class="image-backdrop"></div>
     <div class="left">
         <div class="section-number">03</div>
         <div class="big-title-box"></div>
@@ -201,6 +215,7 @@
 
 <!-- 04 COMMISSION -->
 <section id="commission">
+    <div class="image-backdrop"></div>
     <div class="left">
         <div class="section-number">04</div>
         <div class="big-title-box"></div>
@@ -215,6 +230,7 @@
 
 <!-- 05 CONTACT -->
 <section id="contact">
+    <div class="image-backdrop"></div>
     <div class="left">
         <div class="section-number">05</div>
         <div class="big-title-box"></div>
