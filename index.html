@@ -62,7 +62,31 @@
         position: relative;
     }
 
-    /* 巨大タイトル（ゼンゼロ風） */
+    /* セクション番号 */
+    .section-number {
+        font-size: 48px;
+        font-weight: 800;
+        color: #f5d76e;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 1s ease;
+        margin-bottom: 10px;
+    }
+
+    /* 巨大タイトルの背景帯（黄色系） */
+    .big-title-box {
+        position: absolute;
+        left: 0;
+        top: 60px;
+        width: 65%;
+        height: 200px;
+        background: linear-gradient(90deg, #f7e27a 0%, #f5d76e 50%, #eac55f 100%);
+        opacity: 0.25;
+        border-radius: 10px;
+        z-index: -1;
+    }
+
+    /* 巨大タイトル */
     .big-title {
         font-size: 120px;
         font-weight: 900;
@@ -145,9 +169,13 @@
 
 <div class="hero"></div>
 
+<!-- 01 HOME（heroなので番号は表示しない） -->
+
 <!-- 02 ABOUT -->
 <section id="about">
     <div class="left">
+        <div class="section-number">02</div>
+        <div class="big-title-box"></div>
         <div class="big-title">ABOUT</div>
         <div class="text">
             あなたのプロフィールや制作スタイルを紹介するセクション
@@ -160,6 +188,8 @@
 <!-- 03 WORKS -->
 <section id="works">
     <div class="left">
+        <div class="section-number">03</div>
+        <div class="big-title-box"></div>
         <div class="big-title">WORKS</div>
         <div class="text">
             イラスト作品一覧を紹介するセクション
@@ -172,6 +202,8 @@
 <!-- 04 COMMISSION -->
 <section id="commission">
     <div class="left">
+        <div class="section-number">04</div>
+        <div class="big-title-box"></div>
         <div class="big-title">COMMISSION</div>
         <div class="text">
             依頼料金や制作の流れを紹介するセクション
@@ -184,6 +216,8 @@
 <!-- 05 CONTACT -->
 <section id="contact">
     <div class="left">
+        <div class="section-number">05</div>
+        <div class="big-title-box"></div>
         <div class="big-title">CONTACT</div>
         <div class="text">
             依頼フォームや連絡先を紹介するセクション
@@ -201,12 +235,14 @@
             const rect = sec.getBoundingClientRect();
 
             if (rect.top < window.innerHeight && rect.bottom > 0) {
+                sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
                 sec.querySelector(".text").classList.add("show-text");
                 sec.querySelector("img").classList.add("show-img");
             }
 
             if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                sec.querySelector(".section-number").classList.remove("show-title");
                 sec.querySelector(".big-title").classList.remove("show-title");
                 sec.querySelector(".text").classList.remove("show-text");
                 sec.querySelector("img").classList.remove("show-img");
