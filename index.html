@@ -26,7 +26,13 @@
         background: rgba(0,0,0,0.5);
         backdrop-filter: blur(10px);
         z-index: 1000;
+        box-sizing: border-box; 
     }
+    nav {
+    display: flex;
+    flex-wrap: wrap;      /* 画面幅が狭いときに折り返す */
+    gap: 8px;             /* ボタン同士の余白 */
+}
     nav a {
         color: white;
         margin-left: 10px;
@@ -153,8 +159,15 @@
 </section>
 
 <!-- 05 CONTACT -->
+<section id="contact">
+    <div class="text">
+        05 CONTACT  
+        <br>依頼フォームや連絡先を紹介するセクション
+        <br><a class="more-btn" href="contact.html">もっと見る</a>
+    </div>
+    <img src="" alt="">
 </section>
-
+    
 <script>
     /* スクロールでスライドイン */
     const sections = document.querySelectorAll("section");
