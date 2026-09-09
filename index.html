@@ -153,3 +153,30 @@
 </section>
 
 <!-- 05 CONTACT -->
+</section>
+
+<script>
+    /* スクロールでスライドイン */
+    const sections = document.querySelectorAll("section");
+
+    window.addEventListener("scroll", () => {
+        sections.forEach(sec => {
+            const rect = sec.getBoundingClientRect();
+
+            // 画面下の辺がセクション上辺を通過したら発火
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                sec.querySelector(".text").classList.add("show-text");
+                sec.querySelector("img").classList.add("show-img");
+            }
+
+            // 下から上に戻ったらリセット
+            if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                sec.querySelector(".text").classList.remove("show-text");
+                sec.querySelector("img").classList.remove("show-img");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
