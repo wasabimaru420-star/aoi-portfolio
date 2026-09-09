@@ -62,23 +62,23 @@
         position: relative;
     }
 
-    /* 画像の後ろの白い太い帯（ゼンゼロ風） */
+    /* 画像の後ろの白い太い帯（透かし無し） */
     .image-backdrop {
         position: absolute;
         right: 0;
         top: 120px;
         width: 55%;
         height: 70%;
-        background: rgba(255,255,255,0.15);
+        background: #ffffff; /* 完全な白 */
         border-radius: 20px;
         z-index: -1;
     }
 
-    /* セクション番号 */
+    /* セクション番号（濃いグレー） */
     .section-number {
         font-size: 48px;
         font-weight: 800;
-        color: #f5d76e;
+        color: #444444; /* 濃いグレー */
         opacity: 0;
         transform: translateY(40px);
         transition: 1s ease;
@@ -92,16 +92,17 @@
         top: 60px;
         width: 65%;
         height: 200px;
-        background: linear-gradient(90deg, #f7e27a 0%, #f5d76e 50%, #eac55f 100%);
-        opacity: 0.25;
+        background: linear-gradient(90deg, #ffe27a 0%, #f5d76e 50%, #eac55f 100%);
+        opacity: 1; /* 透かさない */
         border-radius: 10px;
         z-index: -1;
     }
 
-    /* 巨大タイトル */
+    /* 巨大タイトル（濃いグレー） */
     .big-title {
         font-size: 120px;
         font-weight: 900;
+        color: #444444; /* 濃いグレー */
         opacity: 0;
         transform: translateY(40px);
         transition: 1s ease;
@@ -119,7 +120,7 @@
     section .text {
         width: 45%;
         font-size: 20px;
-        color: #d0d0d0; /* ★濃いグレー */
+        color: #444444; /* 濃いグレー */
         opacity: 0;
         transform: translateX(-50px);
         transition: 1s ease;
