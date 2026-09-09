@@ -51,15 +51,16 @@
         border-radius: 4px;
     }
 
-    /* HERO（kv2 の画像をサイズダウンして中央配置） */
+    /* HERO（kv2 の画像を上にくっつけてサイズダウン） */
     .hero {
         height: 100vh;
         display: flex;
         justify-content: center;
-        align-items: flex-start;  
+        align-items: flex-start; /* ← 上にくっつける */
+        padding-top: 40px;
     }
     .hero img {
-        width: 60%; /* ← サイズダウン */
+        width: 60%;
         border-radius: 20px;
     }
 
@@ -80,7 +81,7 @@
         right: 0;
         top: 120px;
         width: 55%;
-        height: 70%;
+        height: 60%; /* ← ABOUT の縦幅を揃えるために調整 */
         background: #ffffff;
         border-radius: 20px;
         z-index: -1;
@@ -103,13 +104,13 @@
     .big-title-box {
         position: absolute;
         left: 0;
-        top: 20px; /* ← 位置を調整して文字に重なる */
+        top: 20px; /* ← 文字に重なるように上へ詰める */
         width: 70%;
-        height: 300px;
+        height: 180px; /* ← 文字にフィットする高さ */
         background: linear-gradient(90deg, #ffe27a 0%, #f5d76e 50%, #eac55f 100%);
         opacity: 1;
         border-radius: 10px;
-        z-index: 1; /* ← 文字の後ろに来る */
+        z-index: 1;
     }
 
     /* 巨大タイトル（濃いグレー） */
@@ -124,7 +125,7 @@
         letter-spacing: -2px;
         margin-bottom: 40px;
         position: relative;
-        z-index: 2; /* ← 黄色帯より前に表示 */
+        z-index: 2;
     }
 
     .show-title {
@@ -144,7 +145,21 @@
         z-index: 2;
     }
 
-    section img {
+    /* 下だけトリミングする画像（ABOUT用） */
+    .crop-img {
+        width: 45%;
+        height: 450px;      /* ← 帯に合わせた高さ */
+        object-fit: cover;  /* ← トリミング有効化 */
+        object-position: top; /* ← 上はそのまま、下だけ切れる */
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateX(50px);
+        transition: 1s ease;
+        position: relative;
+        z-index: 2;
+    }
+
+    section img:not(.crop-img) {
         width: 45%;
         border-radius: 10px;
         opacity: 0;
@@ -208,7 +223,9 @@
             <br><a class="more-btn" href="about.html">もっと見る</a>
         </div>
     </div>
-    <img src="img/イラスト196.webp" alt="">
+
+    <!-- 下だけトリミングする画像 -->
+    <img class="crop-img" src="img/イラスト196.webp" alt="">
 </section>
 
 <!-- 03 WORKS -->
