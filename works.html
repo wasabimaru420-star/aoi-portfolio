@@ -95,17 +95,17 @@
     .work-display {
         padding: 40px;
         display: grid;
-        grid-template-columns: 55% 45%; /* ← 左画像 / 右説明文 を固定 */
-        grid-template-rows: 1fr;        /* ← 高さを画像に依存させない */
+        grid-template-columns: 55% 45%;
+        grid-template-rows: 1fr;
         align-items: center;
         gap: 40px;
     }
 
-    /* ★画像が見切れないようにする（全身表示） */
+    /* ★画像の基本設定（作品ごとに JS で上書きする） */
     #main-work-img {
         width: 100%;
-        height: 100%;        /* ← 高さを固定して説明文がズレない */
-        object-fit: contain; /* ← 全身が入る */
+        height: 100%;
+        object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
@@ -113,9 +113,9 @@
     /* ★説明文の位置を完全固定 */
     .work-description {
         width: 100%;
-        height: 100%;        /* ← 画像の高さに影響されない */
+        height: 100%;
         display: flex;
-        align-items: flex-start; /* ← 常に上から始まる */
+        align-items: flex-start;
         font-size: 20px;
         line-height: 1.6;
         opacity: 0.9;
@@ -222,7 +222,7 @@
 const works = {
     vtuber: [
         { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
-        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" },
+        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" }, /* ← 横長 */
         { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
     ],
 
@@ -285,14 +285,27 @@ function updateCarousel() {
     });
 }
 
-/* 中央表示更新 */
+/* ★中央表示更新（イラスト150だけ縦基準で表示） */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
     description.textContent = w.desc;
 
-    /* ★背景も更新 */
+    /* 背景更新 */
     updateBackground(w.src);
+
+    /* ★画像サイズを作品ごとに調整 */
+    if (w.src.includes("イラスト150")) {
+        /* 横長 → 縦基準で合わせる */
+        mainImg.style.width = "auto";
+        mainImg.style.height = "100%";
+        mainImg.style.objectFit = "contain";
+    } else {
+        /* 他の作品は横幅基準 */
+        mainImg.style.width = "100%";
+        mainImg.style.height = "100%";
+        mainImg.style.objectFit = "contain";
+    }
 }
 
 /* 初期表示 */
