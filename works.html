@@ -96,13 +96,14 @@
         gap: 40px;
     }
 
-    /* ★全画像共通：縦は自動、横は100%（150だけ JS で上書き） */
+    /* ★全画像共通：自然なサイズで表示 */
     #main-work-img {
         width: 100%;
         height: auto;
         object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
+        transform-origin: top center; /* ← 縦拡大の基準点 */
     }
 
     .work-description {
@@ -211,7 +212,7 @@
 const works = {
     vtuber: [
         { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
-        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" }, // ★横長
+        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" },
         { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
     ],
 
@@ -279,15 +280,26 @@ function updateDisplay() {
 
     updateBackground(w.src);
 
-    if (w.src.includes("イラスト150")) {
-        mainImg.style.height = "100%";  // ← 他と同じ縦の長さ
-        mainImg.style.width = "auto";   // ← 横幅は自動（触らない）
-    } else {
-        mainImg.style.height = "auto";  // ← 縦長画像は自然に
-        mainImg.style.width = "100%";   // ← 横幅はそのまま
-    }
+    /* 全画像の transform をリセット */
+    mainImg.style.transform = "none";
 
-    mainImg.style.objectFit = "contain";
+    if (w.src.includes("イラスト150")) {
+        /* ★150だけ縦方向に拡大して他と同じ高さにする */
+        mainImg.onload = () => {
+            const naturalH = mainImg.naturalHeight;
+            const naturalW = mainImg.naturalWidth;
+
+            /* 他の画像の縦の長さ（148の縦）を基準にする */
+            const baseH =  works.vtuber[0].src === "img/イラスト148.webp"
+                ? mainImg.naturalHeight
+                : naturalH;
+
+            /* 150 の縦を他と揃える倍率 */
+            const scale = baseH / naturalH;
+
+            mainImg.style.transform = `scaleY(${scale})`;
+        };
+    }
 }
 
 updateDisplay();
