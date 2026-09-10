@@ -283,7 +283,7 @@ section {
                 if (img) img.classList.add("show-img");
             }
 
-            if (rect.bottom < 0 || rect.top > window.innerHeight) {
+            if  (rect.top > window.innerHeight) {
                 sec.querySelector(".section-number").classList.remove("show-title");
                 sec.querySelector(".big-title").classList.remove("show-title");
 
