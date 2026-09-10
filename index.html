@@ -112,11 +112,11 @@
         z-index: 2;
     }
 
-    /* 説明文 → 白帯内へ移動 */
+    /* 説明文 → 白帯右下付近 */
     .text {
         position: absolute;
         right: 40px;
-        top: 210px;
+        top: calc(180px + 45vh - 140px); /* 白帯の下端から少し上 */
         width: 45%;
         font-size: 20px;
         color: #444;
@@ -129,36 +129,30 @@
     .show-title { opacity: 1; transform: translateY(0); }
     .show-text { opacity: 1; transform: translateY(0); }
 
-    /* イラスト196：膝から上＋白帯下端と一致 */
-    .image-frame {
+    /* イラスト196：膝から上＋下端を白帯下端に一致させる */
+    .crop-img {
         position: absolute;
         right: 80px;
-        top: calc(180px - 10vh); /* ← 上端を飛び出させる */
         width: 55%;
-        height: 45vh; /* ← 白帯と同じ高さ（下端一致） */
-        overflow: hidden;
-        border-radius: 10px;
-        z-index: 2;
-    }
-
-    .crop-img {
-        width: 100%;
-        height: auto;
+        height: 60vh; /* 膝から上が見えるくらいの高さ */
+        top: calc(180px + 45vh - 60vh); /* 下端が白帯下端と一致するように計算 */
         object-fit: cover;
-        object-position: top; /* ← 上側を優先表示（膝から上） */
+        object-position: top; /* 上側優先表示（膝から上） */
+        border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
         transition: 1s ease;
+        z-index: 2;
     }
 
-    /* WORKS の画像：少し小さくして余白を作る */
+    /* WORKS の画像（いじらない方針） */
     .normal-img {
         position: absolute;
         right: 80px;
         top: 200px;
-        width: 50%;      /* ← 少し小さく */
+        width: 50%;
         height: auto;
-        max-height: 38vh; /* ← 白帯より小さくして余白を作る */
+        max-height: 38vh;
         object-fit: contain;
         border-radius: 10px;
         opacity: 0;
@@ -169,11 +163,11 @@
 
     .show-img { opacity: 1; transform: translateX(0); }
 
-    /* もっと見る → 白帯右下へ配置 */
+    /* もっと見る → 白帯右下に配置 */
     .more-btn {
         position: absolute;
         right: 40px;
-        bottom: 40px;
+        top: calc(180px + 45vh - 80px); /* 白帯下端付近の右下 */
         background: black;
         color: white;
         padding: 10px 20px;
@@ -212,9 +206,7 @@
         あなたのプロフィールや制作スタイルを紹介するセクション
     </div>
 
-    <div class="image-frame">
-        <img class="crop-img" src="img/イラスト196.webp" alt="">
-    </div>
+    <img class="crop-img" src="img/イラスト196.webp" alt="">
 
     <a class="more-btn" href="about.html">もっと見る</a>
 </section>
