@@ -32,18 +32,20 @@
         background: rgba(0,0,0,0.5);
         backdrop-filter: blur(10px);
         z-index: 1000;
+        box-sizing: border-box;
     }
 
     nav {
         display: flex;
-        gap: 10px;
+        gap: 8px;
+        flex-wrap: wrap; /* メニューが右端で切れないように折り返し */
     }
 
     nav a {
         color: white;
         text-decoration: none;
-        font-size: 18px;
-        padding: 4px 8px;
+        font-size: 16px; /* 少し小さくして収まりを良くする */
+        padding: 4px 6px;
         transition: 0.3s;
     }
 
@@ -57,31 +59,28 @@
         height: 40vh;
     }
 
-    /* ★ セクション全体を900px下げる（スライドイン維持） */
     section {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        padding: 900px 80px 60px; /* ← 下端を縮めた */
+        padding: 900px 80px 60px;
         box-sizing: border-box;
         position: relative;
     }
 
-    /* ★ 白帯（画面比率で高さ変化） */
     .image-backdrop {
         position: absolute;
         right: 0;
         top: 180px;
         width: 55%;
-        height: 45vh; /* ← 面積固定のため比率で変化 */
+        height: 45vh;
         background: white;
         border-radius: 20px;
         z-index: -1;
     }
 
-    /* ★ 黄色帯（文字を中に入れる） */
     .big-title-box {
         position: absolute;
         left: 0;
@@ -93,11 +92,10 @@
         z-index: 1;
     }
 
-    /* ★ セクション番号（黄色帯の中に入れる） */
     .section-number {
         position: absolute;
         left: 20px;
-        top: 240px; /* 黄色帯の中 */
+        top: 240px;
         font-size: 60px;
         font-weight: 800;
         color: #444;
@@ -107,11 +105,10 @@
         z-index: 2;
     }
 
-    /* ★ タイトル（黄色帯の中に入れる） */
     .big-title {
         position: absolute;
         left: 20px;
-        top: 300px; /* 黄色帯の中 */
+        top: 292px; /* 下端が黄色帯の下端(400px)にほぼ一致するよう調整 */
         font-size: 120px;
         font-weight: 900;
         color: #444;
@@ -123,11 +120,10 @@
         z-index: 2;
     }
 
-    /* ★ 説明文（黄色帯の下端に揃える） */
     .text {
         position: absolute;
         left: 20px;
-        top: 360px; /* 黄色帯の下端に揃える */
+        top: 360px;
         width: 60%;
         font-size: 20px;
         color: #444;
@@ -146,37 +142,16 @@
         transform: translateY(0);
     }
 
-    /* ★ 画像（画面比率で高さ変化・頭飛び出し・白帯下端と一致） */
-    .crop-img {
-        position: absolute;
-        right: 80px;
-
-        width: 55%;
-        height: 60vh; /* ← 面積固定のため比率で変化 */
-
-        /* 数学的に白帯の下端と一致させる */
-        top: calc(180px - 15vh); /* 180px + 45vh - 60vh = 180px - 15vh */
-
-        object-fit: cover;
-        object-position: top;
-        border-radius: 10px;
-
-        opacity: 0;
-        transform: translateX(50px);
-        transition: 1s ease;
-        z-index: 2;
-    }
-
-    /* ★ 通常画像（WORKSなど） */
+    /* 画像：比率を保ったままサイズ変更 */
+    .crop-img,
     .normal-img {
         position: absolute;
         right: 80px;
-        top: calc(180px - 15vh);
-
+        top: 180px; /* 白帯の中に収める基準位置 */
         width: 55%;
-        height: 60vh;
-
-        object-fit: cover;
+        height: auto;
+        max-height: 45vh; /* 白帯の高さに収まるように */
+        object-fit: contain; /* トリミングせず元の比率を維持 */
         object-position: center;
         border-radius: 10px;
 
@@ -193,12 +168,16 @@
 
     .more-btn {
         display: inline-block;
-        margin-top: 10px;
         padding: 10px 20px;
         border: 2px solid white;
         color: white;
         text-decoration: none;
         transition: 0.3s;
+
+        position: absolute;
+        right: 40px;
+        bottom: 40px; /* 白い帯右下付近に配置 */
+        z-index: 3;
     }
 
     .more-btn:hover {
@@ -232,10 +211,10 @@
     <div class="big-title">ABOUT</div>
     <div class="text">
         あなたのプロフィールや制作スタイルを紹介するセクション
-        <br><a class="more-btn" href="about.html">もっと見る</a>
     </div>
 
     <img class="crop-img" src="img/イラスト196.webp" alt="">
+    <a class="more-btn" href="about.html">もっと見る</a>
 </section>
 
 <!-- 03 WORKS -->
@@ -247,10 +226,10 @@
     <div class="big-title">WORKS</div>
     <div class="text">
         イラスト作品一覧を紹介するセクション
-        <br><a class="more-btn" href="works.html">もっと見る</a>
     </div>
 
     <img class="normal-img" src="img/イラスト14.webp" alt="">
+    <a class="more-btn" href="works.html">もっと見る</a>
 </section>
 
 <!-- 04 COMMISSION -->
@@ -262,10 +241,9 @@
     <div class="big-title">COMMISSION</div>
     <div class="text">
         依頼料金や制作の流れを紹介するセクション
-        <br><a class="more-btn" href="commission.html">もっと見る</a>
     </div>
 
-    <img class="normal-img" src="" alt="">
+    <a class="more-btn" href="commission.html">もっと見る</a>
 </section>
 
 <!-- 05 CONTACT -->
@@ -277,10 +255,9 @@
     <div class="big-title">CONTACT</div>
     <div class="text">
         依頼フォームや連絡先を紹介するセクション
-        <br><a class="more-btn" href="contact.html">もっと見る</a>
     </div>
 
-    <img class="normal-img" src="" alt="">
+    <a class="more-btn" href="contact.html">もっと見る</a>
 </section>
 
 <script>
@@ -294,14 +271,16 @@
                 sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
                 sec.querySelector(".text").classList.add("show-text");
-                sec.querySelector("img").classList.add("show-img");
+                const img = sec.querySelector("img");
+                if (img) img.classList.add("show-img");
             }
 
             if (rect.bottom < 0 || rect.top > window.innerHeight) {
                 sec.querySelector(".section-number").classList.remove("show-title");
                 sec.querySelector(".big-title").classList.remove("show-title");
                 sec.querySelector(".text").classList.remove("show-text");
-                sec.querySelector("img").classList.remove("show-img");
+                const img = sec.querySelector("img");
+                if (img) img.classList.remove("show-img");
             }
         });
     });
