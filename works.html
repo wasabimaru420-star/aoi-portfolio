@@ -88,20 +88,21 @@
         opacity: 1;
     }
 
+    /* ★画像枠だけ広げた（画像サイズは一切変更なし） */
     .work-display {
         padding: 40px;
         display: grid;
-        grid-template-columns: 55% 45%;
+        grid-template-columns: 700px 1fr; /* ← 枠を広げた */
         align-items: center;
         gap: 40px;
     }
 
-    /* ★vtuber の全身が必ず画面に収まる設定 */
+    /* ★画像の大きさは今のまま（触らない） */
     #main-work-img {
-        max-height: 100vh;   /* ← 画面の高さに収める */
-        width: auto;         /* ← 横幅は触らない */
+        width: auto;
         height: auto;
-        object-fit: contain; /* ← 全身を収める */
+        max-height: 100vh;
+        object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
@@ -272,7 +273,6 @@ function updateCarousel() {
     });
 }
 
-/* ★vtuber の全身が必ず画面に収まる */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
@@ -280,13 +280,8 @@ function updateDisplay() {
 
     updateBackground(w.src);
 
-    /* 150 だけ横幅を自動にする（縦は max-height で揃う） */
-    if (w.src.includes("イラスト150")) {
-        mainImg.style.width = "auto";
-    } else {
-        mainImg.style.width = "100%";
-    }
-
+    /* 画像サイズは一切触らない */
+    mainImg.style.width = "auto";
     mainImg.style.height = "auto";
     mainImg.style.objectFit = "contain";
 }
