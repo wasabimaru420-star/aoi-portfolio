@@ -96,14 +96,14 @@
         gap: 40px;
     }
 
-    /* ★全画像共通：自然なサイズで表示 */
+    /* ★vtuber の全身が必ず画面に収まる設定 */
     #main-work-img {
-        width: 100%;
+        max-height: 100vh;   /* ← 画面の高さに収める */
+        width: auto;         /* ← 横幅は触らない */
         height: auto;
-        object-fit: contain;
+        object-fit: contain; /* ← 全身を収める */
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
-        transform-origin: top center; /* ← 縦拡大の基準点 */
     }
 
     .work-description {
@@ -272,7 +272,7 @@ function updateCarousel() {
     });
 }
 
-/* ★150だけ縦の長さを揃える（横幅は触らない） */
+/* ★vtuber の全身が必ず画面に収まる */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
@@ -280,26 +280,15 @@ function updateDisplay() {
 
     updateBackground(w.src);
 
-    /* 全画像の transform をリセット */
-    mainImg.style.transform = "none";
-
+    /* 150 だけ横幅を自動にする（縦は max-height で揃う） */
     if (w.src.includes("イラスト150")) {
-        /* ★150だけ縦方向に拡大して他と同じ高さにする */
-        mainImg.onload = () => {
-            const naturalH = mainImg.naturalHeight;
-            const naturalW = mainImg.naturalWidth;
-
-            /* 他の画像の縦の長さ（148の縦）を基準にする */
-            const baseH =  works.vtuber[0].src === "img/イラスト148.webp"
-                ? mainImg.naturalHeight
-                : naturalH;
-
-            /* 150 の縦を他と揃える倍率 */
-            const scale = baseH / naturalH;
-
-            mainImg.style.transform = `scaleY(${scale})`;
-        };
+        mainImg.style.width = "auto";
+    } else {
+        mainImg.style.width = "100%";
     }
+
+    mainImg.style.height = "auto";
+    mainImg.style.objectFit = "contain";
 }
 
 updateDisplay();
