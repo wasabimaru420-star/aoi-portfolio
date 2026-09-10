@@ -113,7 +113,7 @@
         z-index: 2;
     }
 
-    /* タイトル横の説明文（新設） */
+    /* タイトル横の説明文（スライドイン対応済み） */
     .title-text {
         position: absolute;
         left: 120px;
@@ -122,9 +122,14 @@
         font-weight: 600;
         color: #444;
         z-index: 3;
+
+        /* ★スライドイン初期状態 */
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 1s ease;
     }
 
-    /* 白帯右下のもっと見るボタン（説明文は削除済み） */
+    /* 白帯右下のもっと見るボタン */
     .info-box {
         position: absolute;
         right: 40px;
@@ -288,6 +293,10 @@
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.add("show-img");
+
+                /* ★説明文もスライドイン */
+                const txt = sec.querySelector(".title-text");
+                if (txt) txt.classList.add("show-title");
             }
 
             if (rect.top > window.innerHeight) {
@@ -296,6 +305,10 @@
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.remove("show-img");
+
+                /* ★説明文もリセット */
+                const txt = sec.querySelector(".title-text");
+                if (txt) txt.classList.remove("show-title");
             }
         });
     });
