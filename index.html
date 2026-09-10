@@ -53,10 +53,9 @@
         height: 40vh;
     }
 
-    /* ▼ セクション全体を下げる（スライドイン判定を壊さない方法） */
     section {
         min-height: 100vh;
-        padding: 1150px 80px 60px; /* ← 900px → 1150px に変更 */
+        padding: 900px 80px 60px;
         box-sizing: border-box;
         position: relative;
     }
@@ -113,22 +112,30 @@
         z-index: 2;
     }
 
+    /* 白帯右下の説明文＋もっと見るを横並びにするコンテナ */
     .info-box {
         position: absolute;
         right: 40px;
-        top: calc(180px + 45vh - 60px);
+        top: calc(180px + 45vh - 60px); /* 白帯の下端付近 */
         display: flex;
         align-items: end;
         gap: 20px;
         z-index: 4;
     }
 
+    /* 説明文（info-box内で横並び） */
     .text {
+        position: static;
+        width: auto;
         font-size: 20px;
         color: #444;
+        opacity: 1;
+        transform: none;
     }
 
+    /* もっと見るボタン（info-box内で横並び） */
     .more-btn {
+        position: static;
         background: black;
         color: white;
         padding: 10px 20px;
@@ -138,13 +145,15 @@
     }
 
     .show-title { opacity: 1; transform: translateY(0); }
+    .show-text { opacity: 1; transform: translateY(0); }
 
+    /* イラスト196：下端を白帯下端に完全一致させる */
     .crop-img {
         position: absolute;
         right: 80px;
         width: 55%;
-        height: 60vh;
-        top: calc(180px + 45vh - 60vh);
+        height: 60vh; /* 膝から上が見える高さ */
+        top: calc(180px + 45vh - 60vh); /* 下端が白帯下端と一致する計算式 */
         object-fit: cover;
         object-position: top;
         border-radius: 10px;
@@ -154,11 +163,13 @@
         z-index: 2;
     }
 
+    /* WORKS の画像（触らない） */
     .normal-img {
         position: absolute;
         right: 80px;
         top: 200px;
         width: 50%;
+        height: auto;
         max-height: 38vh;
         object-fit: contain;
         border-radius: 10px;
@@ -169,11 +180,11 @@
     }
 
     .show-img { opacity: 1; transform: translateX(0); }
-
-    /* セクション間隔を詰める */
-    section + section {
-        margin-top: -200px;
-    }
+    
+    /* 02,03,04,05 セクション同士の距離を縮める */
+section + section {
+    margin-top: -200px; /* 好きな量に調整可能 */
+}
 
 </style>
 </head>
@@ -260,13 +271,20 @@
         sections.forEach(sec => {
             const rect = sec.getBoundingClientRect();
 
-            /* ▼ スライドインだけ残す（スライドアウトは消す） */
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.add("show-img");
+            }
+
+            if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                sec.querySelector(".section-number").classList.remove("show-title");
+                sec.querySelector(".big-title").classList.remove("show-title");
+
+                const img = sec.querySelector("img");
+                if (img) img.classList.remove("show-img");
             }
         });
     });
