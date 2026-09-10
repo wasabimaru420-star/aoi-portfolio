@@ -10,7 +10,7 @@
         margin: 0;
         padding-top: 70px;
 
-        /* 背景はイラスト25のみ */
+        /* 背景はイラスト25のみ（固定） */
         background: #0a0a0a url('img/イラスト25.webp');
         background-position: top center;
         background-attachment: scroll;
@@ -59,29 +59,28 @@
 
     /* HERO（背景画像のみなので高さだけ） */
     .hero {
-        height: 40vh;
+        height: 400px; /* px固定 */
     }
 
-    /* セクション共通 */
+    /* セクション共通（px固定） */
     section {
-        min-height: 100vh;
+        min-height: 1000px; /* vhを使わず固定 */
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        /* ★ABOUT以下をもっと下げる */
-        padding: 700px 80px 120px;
+        padding: 700px 80px 120px; /* ABOUT以下の開始位置を固定 */
         box-sizing: border-box;
         position: relative;
     }
 
-    /* ★白い帯の太さと位置を統一 */
+    /* 白い帯（px固定） */
     .image-backdrop {
         position: absolute;
         right: 0;
-        top: 700px;     /* セクションの開始位置に合わせて下げる */
+        top: 700px;     /* セクション開始位置に合わせて固定 */
         width: 55%;
-        height: 48%;    /* 統一して少し細め */
+        height: 480px;  /* px固定でズレ防止 */
         background: #ffffff;
         border-radius: 20px;
         z-index: -1;
@@ -100,11 +99,11 @@
         z-index: 2;
     }
 
-    /* タイトルの後ろの黄色帯（文字に重なる） */
+    /* 黄色帯（px固定） */
     .big-title-box {
         position: absolute;
         left: 0;
-        top: 760px; /* 白帯に合わせて下げる */
+        top: 760px; /* 白帯に合わせて固定 */
         width: 70%;
         height: 180px;
         background: linear-gradient(90deg, #ffe27a 0%, #f5d76e 50%, #eac55f 100%);
@@ -145,10 +144,10 @@
         z-index: 2;
     }
 
-    /* ABOUT の画像だけ下トリミング（白帯の下端とぴったり合わせる） */
+    /* ABOUT の画像（px固定） */
     .crop-img {
-        width: 55%;          /* 画像を大きくする（共通） */
-        height: 560px;       /* 白帯の下端と揃うように調整 */
+        width: 55%;          /* 画像を大きくする */
+        height: 560px;       /* 白帯の下端と揃う高さに固定 */
         object-fit: cover;
         object-position: top; /* 頭は上に飛び出す */
         border-radius: 10px;
@@ -161,7 +160,10 @@
 
     /* 通常画像（WORKSなど） */
     .normal-img {
-        width: 55%;          /* 画像を大きくする（共通） */
+        width: 55%;          /* 画像を大きくする */
+        height: 560px;       /* 統一して固定 */
+        object-fit: cover;
+        object-position: center;
         border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
