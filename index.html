@@ -10,18 +10,11 @@
         margin: 0;
         padding-top: 70px;
 
-        /* ★背景はイラスト25のみ */
+        /* 背景はイラスト25のみ */
         background: #0a0a0a url('img/イラスト25.webp');
-
-        /* ★背景画像の上端をページ上に合わせる */
         background-position: top center;
-
-        /* ★スクロールに合わせて背景も動く */
         background-attachment: scroll;
-
-        /* ★サイト全体の縦の長さに合わせて背景を自然に伸縮 */
         background-size: 100% auto;
-
         background-repeat: no-repeat;
 
         color: white;
@@ -52,7 +45,6 @@
 
     nav a {
         color: white;
-        margin-left: 0;
         text-decoration: none;
         font-size: 18px;
         padding: 4px 8px;
@@ -76,18 +68,20 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 120px 80px;
+
+        /* ★ABOUTが画面外から始まるように位置を下げる */
+        padding: 200px 80px 120px;
         box-sizing: border-box;
         position: relative;
     }
 
-    /* 画像の後ろの白い太い帯 */
+    /* ★白い帯の太さを統一（細めに調整） */
     .image-backdrop {
         position: absolute;
         right: 0;
-        top: 120px;
+        top: 160px;     /* 全セクション統一 */
         width: 55%;
-        height: 60%;
+        height: 50%;    /* 統一して細めに */
         background: #ffffff;
         border-radius: 20px;
         z-index: -1;
@@ -219,6 +213,7 @@
 <!-- 02 ABOUT -->
 <section id="about">
     <div class="image-backdrop"></div>
+
     <div class="left">
         <div class="section-number">02</div>
         <div class="big-title-box"></div>
@@ -235,6 +230,7 @@
 <!-- 03 WORKS -->
 <section id="works">
     <div class="image-backdrop"></div>
+
     <div class="left">
         <div class="section-number">03</div>
         <div class="big-title-box"></div>
@@ -251,6 +247,7 @@
 <!-- 04 COMMISSION -->
 <section id="commission">
     <div class="image-backdrop"></div>
+
     <div class="left">
         <div class="section-number">04</div>
         <div class="big-title-box"></div>
@@ -260,12 +257,14 @@
             <br><a class="more-btn" href="commission.html">もっと見る</a>
         </div>
     </div>
+
     <img class="normal-img" src="" alt="">
 </section>
 
 <!-- 05 CONTACT -->
 <section id="contact">
     <div class="image-backdrop"></div>
+
     <div class="left">
         <div class="section-number">05</div>
         <div class="big-title-box"></div>
@@ -275,6 +274,7 @@
             <br><a class="more-btn" href="contact.html">もっと見る</a>
         </div>
     </div>
+
     <img class="normal-img" src="" alt="">
 </section>
 
