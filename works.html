@@ -46,6 +46,19 @@
         border-radius: 4px;
     }
 
+    /* ★ぼかし背景（現在選択中の画像） */
+    .blur-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: blur(40px) brightness(0.5);
+        z-index: -1;
+    }
+
     .works-layout {
         display: grid;
         grid-template-columns: 1fr 220px;
@@ -82,10 +95,11 @@
         align-items: center;
     }
 
+    /* ★画像を大きくする */
     #main-work-img {
-        width: 40%;
+        width: 55%;
         border-radius: 10px;
-        box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
     .work-description {
@@ -153,6 +167,9 @@
     </nav>
 </header>
 
+<!-- ★ぼかし背景 -->
+<div class="blur-bg"></div>
+
 <div class="works-layout">
 
     <!-- ★カテゴリは全部残す -->
@@ -197,8 +214,7 @@ const works = {
     character: [],
     minicharacter: [],
     other: [],
-
-    all: []  // 必要なら後で自動生成にする
+    all: []
 };
 
 let currentCategory = "vtuber";
@@ -207,7 +223,14 @@ let currentIndex = 0;
 const mainImg = document.getElementById("main-work-img");
 const description = document.querySelector(".work-description");
 const track = document.querySelector(".carousel-track");
+const blurBg = document.querySelector(".blur-bg");
 
+/* ★背景を更新する関数 */
+function updateBackground(src) {
+    blurBg.style.backgroundImage = `url(${src})`;
+}
+
+/* カテゴリ切り替え */
 document.querySelectorAll(".category").forEach(cat => {
     cat.addEventListener("click", () => {
         currentCategory = cat.textContent.trim();
@@ -217,6 +240,7 @@ document.querySelectorAll(".category").forEach(cat => {
             mainImg.src = "";
             description.textContent = "このカテゴリにはまだ作品がありません。";
             track.innerHTML = "";
+            updateBackground("");
             return;
         }
 
@@ -225,6 +249,7 @@ document.querySelectorAll(".category").forEach(cat => {
     });
 });
 
+/* カルーセル更新 */
 function updateCarousel() {
     track.innerHTML = "";
     works[currentCategory].forEach((w, i) => {
@@ -239,15 +264,21 @@ function updateCarousel() {
     });
 }
 
+/* 中央表示更新 */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
     description.textContent = w.desc;
+
+    /* ★背景も更新 */
+    updateBackground(w.src);
 }
 
+/* 初期表示 */
 updateDisplay();
 updateCarousel();
 
+/* 左右矢印 */
 document.querySelector(".arrow.left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
     updateDisplay();
