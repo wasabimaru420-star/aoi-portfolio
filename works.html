@@ -14,11 +14,13 @@
         overflow: hidden;
     }
 
+    /* ★ホームメニューバー（index.html と完全一致） */
     header {
         position: fixed;
         top: 0;
         width: 100%;
         padding: 10px 20px;
+        box-sizing: border-box; /* ←これが抜けていた */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -67,6 +69,7 @@
         margin-top: 70px;
     }
 
+    /* ★カテゴリバー（右側固定） */
     .category-bar {
         grid-column: 2;
         grid-row: 1 / 3;
@@ -88,6 +91,7 @@
         opacity: 1;
     }
 
+    /* ★中央の作品表示（画像が見切れないように調整） */
     .work-display {
         padding: 40px;
         display: flex;
@@ -95,9 +99,10 @@
         align-items: center;
     }
 
-    /* ★画像を大きくする */
     #main-work-img {
-        width: 55%;
+        width: 55%;        /* ← キービジュアルも vtuber も大きく表示 */
+        height: auto;      /* ← 高さ固定をやめる */
+        object-fit: contain; /* ← 全身が入る */
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
@@ -109,13 +114,21 @@
         opacity: 0.9;
     }
 
+    /* ★下の作品シークバー（固定表示） */
     .work-carousel {
-        grid-column: 1 / 3;
+        position: fixed; /* ← 固定 */
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 180px;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 20px;
         padding-bottom: 20px;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(10px);
+        z-index: 900;
     }
 
     .arrow {
@@ -188,12 +201,13 @@
         <div class="work-description">VTuber作品：イラスト148</div>
     </main>
 
-    <div class="work-carousel">
-        <button class="arrow left">←</button>
-        <div class="carousel-track"></div>
-        <button class="arrow right">→</button>
-    </div>
+</div>
 
+<!-- ★固定シークバー -->
+<div class="work-carousel">
+    <button class="arrow left">←</button>
+    <div class="carousel-track"></div>
+    <button class="arrow right">→</button>
 </div>
 
 <script>
