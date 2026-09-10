@@ -9,13 +9,7 @@
     body {
         margin: 0;
         padding-top: 70px;
-
-        background: #0a0a0a url('img/イラスト25.webp');
-        background-position: top center;
-        background-attachment: scroll;
-        background-size: 100% auto;
-        background-repeat: no-repeat;
-
+        background: #0a0a0a url('img/イラスト25.webp') top center / 100% auto no-repeat;
         color: white;
         font-family: "Noto Sans JP", sans-serif;
         overflow-x: hidden;
@@ -61,15 +55,12 @@
 
     section {
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
         padding: 900px 80px 60px;
         box-sizing: border-box;
         position: relative;
     }
 
+    /* 白帯 */
     .image-backdrop {
         position: absolute;
         right: 0;
@@ -81,6 +72,7 @@
         z-index: -1;
     }
 
+    /* 黄色帯 */
     .big-title-box {
         position: absolute;
         left: 0;
@@ -120,67 +112,54 @@
         z-index: 2;
     }
 
-    /* 説明文 → 白帯の中へ移動 */
+    /* 説明文 → 白帯内へ移動 */
     .text {
         position: absolute;
-        right: 100px;
-        top: 220px;
-        width: 40%;
+        right: 40px;
+        top: 210px;
+        width: 45%;
         font-size: 20px;
         color: #444;
-
         opacity: 0;
         transform: translateY(20px);
         transition: 1s ease;
         z-index: 3;
     }
 
-    .show-title {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .show-text {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    .show-title { opacity: 1; transform: translateY(0); }
+    .show-text { opacity: 1; transform: translateY(0); }
 
-    /* 膝から上だけ表示する枠 */
+    /* イラスト196：膝から上＋白帯下端と一致 */
     .image-frame {
         position: absolute;
         right: 80px;
-        top: 180px;
-
+        top: calc(180px - 10vh); /* ← 上端を飛び出させる */
         width: 55%;
-        height: 60vh; /* ← 膝位置に合わせて調整可能 */
-        overflow: hidden; /* ← 膝から下を隠す */
-
+        height: 45vh; /* ← 白帯と同じ高さ（下端一致） */
+        overflow: hidden;
         border-radius: 10px;
         z-index: 2;
     }
 
-    /* 中の画像は比率維持のまま上側を表示 */
     .crop-img {
         width: 100%;
         height: auto;
         object-fit: cover;
-        object-position: top;
-
+        object-position: top; /* ← 上側を優先表示（膝から上） */
         opacity: 0;
         transform: translateX(50px);
         transition: 1s ease;
     }
 
-    /* WORKS の画像（白帯内に収める） */
+    /* WORKS の画像：少し小さくして余白を作る */
     .normal-img {
         position: absolute;
         right: 80px;
-        top: 180px;
-
-        width: 55%;
+        top: 200px;
+        width: 50%;      /* ← 少し小さく */
         height: auto;
-        max-height: 45vh;
+        max-height: 38vh; /* ← 白帯より小さくして余白を作る */
         object-fit: contain;
-
         border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
@@ -188,27 +167,21 @@
         z-index: 2;
     }
 
-    .show-img {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    .show-img { opacity: 1; transform: translateX(0); }
 
-    /* もっと見る → 白帯右下へ移動、黒背景で視認性UP */
+    /* もっと見る → 白帯右下へ配置 */
     .more-btn {
         position: absolute;
         right: 40px;
         bottom: 40px;
-
         background: black;
         color: white;
         padding: 10px 20px;
         border-radius: 6px;
         text-decoration: none;
         font-weight: bold;
-
         z-index: 4;
     }
-
 </style>
 </head>
 
