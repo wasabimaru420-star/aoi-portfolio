@@ -62,7 +62,7 @@
 
     /* ▼ 全セクションの中身をまとめて下げる */
     .section-wrapper {
-        transform: translateY(250px); /* ← 好きな量に調整可能 */
+        transform: translateY(250px);
     }
 
     /* 白帯 */
@@ -117,7 +117,6 @@
         z-index: 2;
     }
 
-    /* 白帯右下の説明文＋もっと見るを横並びにするコンテナ */
     .info-box {
         position: absolute;
         right: 40px;
@@ -147,7 +146,6 @@
 
     .show-title { opacity: 1; transform: translateY(0); }
 
-    /* イラスト196 */
     .crop-img {
         position: absolute;
         right: 80px;
@@ -163,7 +161,6 @@
         z-index: 2;
     }
 
-    /* WORKS の画像 */
     .normal-img {
         position: absolute;
         right: 80px;
@@ -181,7 +178,6 @@
 
     .show-img { opacity: 1; transform: translateX(0); }
 
-    /* セクション間隔を詰める */
     section + section {
         margin-top: -200px;
     }
@@ -279,20 +275,13 @@
         sections.forEach(sec => {
             const rect = sec.getBoundingClientRect();
 
+            /* ▼ スライドインだけ残す */
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.add("show-img");
-            }
-
-            if (rect.bottom < 0 || rect.top > window.innerHeight) {
-                sec.querySelector(".section-number").classList.remove("show-title");
-                sec.querySelector(".big-title").classList.remove("show-title");
-
-                const img = sec.querySelector("img");
-                if (img) img.classList.remove("show-img");
             }
         });
     });
