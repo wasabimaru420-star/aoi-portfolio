@@ -9,11 +9,17 @@
     body {
         margin: 0;
         padding-top: 70px;
-        background: #0a0a0a url('https://www.transparenttextures.com/patterns/asanoha.png'); /* ★中華背景追加 */
+
+        /* ★背景はイラスト25.webpのみ（中華模様コード削除） */
+        background: #0a0a0a url('img/イラスト25.webp');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+
         color: white;
         font-family: "Noto Sans JP", sans-serif;
         overflow-x: hidden;
-        background-size: 600px; /* パターンの大きさ調整 */
     }
 
     /* 固定ヘッダー */
@@ -52,17 +58,9 @@
         border-radius: 4px;
     }
 
-    /* HERO（kv2 の画像を上にくっつけてサイズダウン） */
+    /* HERO（kv2削除 → 背景画像のみ） */
     .hero {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding-top: 40px;
-    }
-    .hero img {
-        width: 60%;
-        border-radius: 20px;
+        height: 40vh; /* 画像は背景なので高さだけ調整 */
     }
 
     /* セクション共通 */
@@ -101,7 +99,7 @@
         z-index: 2;
     }
 
-    /* タイトルの後ろの黄色帯 */
+    /* タイトルの後ろの黄色帯（文字に重なる） */
     .big-title-box {
         position: absolute;
         left: 0;
@@ -209,9 +207,7 @@
     </nav>
 </header>
 
-<div class="hero">
-    <img src="img/kv2.webp" alt="">
-</div>
+<div class="hero"></div>
 
 <!-- 02 ABOUT -->
 <section id="about">
@@ -242,7 +238,6 @@
         </div>
     </div>
 
-    <!-- ★ WORKS の画像を確実に表示 -->
     <img class="normal-img" src="img/イラスト14.webp" alt="">
 </section>
 
