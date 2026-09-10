@@ -20,7 +20,7 @@
         top: 0;
         width: 100%;
         padding: 10px 20px;
-        box-sizing: border-box; /* ←これが抜けていた */
+        box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -91,24 +91,27 @@
         opacity: 1;
     }
 
-    /* ★中央の作品表示（画像が見切れないように調整） */
+    /* ★中央の作品表示（説明文の位置を固定） */
     .work-display {
         padding: 40px;
-        display: flex;
-        gap: 40px;
+        display: grid;
+        grid-template-columns: 55% 45%; /* ← 左画像 / 右説明文 を固定 */
         align-items: center;
+        gap: 40px;
     }
 
+    /* ★画像が見切れないようにする（全身表示） */
     #main-work-img {
-        width: 55%;        /* ← キービジュアルも vtuber も大きく表示 */
-        height: auto;      /* ← 高さ固定をやめる */
-        object-fit: contain; /* ← 全身が入る */
+        width: 100%;
+        height: auto;
+        object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
+    /* ★説明文の位置を完全固定 */
     .work-description {
-        width: 50%;
+        width: 100%;
         font-size: 20px;
         line-height: 1.6;
         opacity: 0.9;
@@ -116,7 +119,7 @@
 
     /* ★下の作品シークバー（固定表示） */
     .work-carousel {
-        position: fixed; /* ← 固定 */
+        position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
