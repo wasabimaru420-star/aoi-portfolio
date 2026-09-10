@@ -14,7 +14,6 @@
         overflow: hidden;
     }
 
-    /* ★ホームメニューバー（index.html と完全一致） */
     header {
         position: fixed;
         top: 0;
@@ -48,7 +47,6 @@
         border-radius: 4px;
     }
 
-    /* ★ぼかし背景（現在選択中の画像） */
     .blur-bg {
         position: fixed;
         top: 0;
@@ -69,7 +67,6 @@
         margin-top: 70px;
     }
 
-    /* ★カテゴリバー（右側固定） */
     .category-bar {
         grid-column: 2;
         grid-row: 1 / 3;
@@ -91,26 +88,23 @@
         opacity: 1;
     }
 
-    /* ★中央の作品表示（説明文の位置を完全固定） */
     .work-display {
         padding: 40px;
         display: grid;
         grid-template-columns: 55% 45%;
-        grid-template-rows: 1fr;
         align-items: center;
         gap: 40px;
     }
 
-    /* ★画像の基本設定（作品ごとに JS で上書きする） */
+    /* ★全画像共通：縦は自動、横は100%（150だけ JS で上書き） */
     #main-work-img {
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
-    /* ★説明文の位置を完全固定 */
     .work-description {
         width: 100%;
         height: 100%;
@@ -121,7 +115,6 @@
         opacity: 0.9;
     }
 
-    /* ★下の作品シークバー（固定表示） */
     .work-carousel {
         position: fixed;
         bottom: 0;
@@ -187,12 +180,10 @@
     </nav>
 </header>
 
-<!-- ★ぼかし背景 -->
 <div class="blur-bg"></div>
 
 <div class="works-layout">
 
-    <!-- ★カテゴリは全部残す -->
     <aside class="category-bar">
         <div class="category">all</div>
         <div class="category">illustration</div>
@@ -210,7 +201,6 @@
 
 </div>
 
-<!-- ★固定シークバー -->
 <div class="work-carousel">
     <button class="arrow left">←</button>
     <div class="carousel-track"></div>
@@ -218,11 +208,10 @@
 </div>
 
 <script>
-/* ★作品データ（カテゴリ別） */
 const works = {
     vtuber: [
         { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
-        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" }, /* ← 横長 */
+        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" }, // ★横長
         { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
     ],
 
@@ -246,12 +235,10 @@ const description = document.querySelector(".work-description");
 const track = document.querySelector(".carousel-track");
 const blurBg = document.querySelector(".blur-bg");
 
-/* ★背景を更新する関数 */
 function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
 }
 
-/* カテゴリ切り替え */
 document.querySelectorAll(".category").forEach(cat => {
     cat.addEventListener("click", () => {
         currentCategory = cat.textContent.trim();
@@ -270,7 +257,6 @@ document.querySelectorAll(".category").forEach(cat => {
     });
 });
 
-/* カルーセル更新 */
 function updateCarousel() {
     track.innerHTML = "";
     works[currentCategory].forEach((w, i) => {
@@ -285,34 +271,28 @@ function updateCarousel() {
     });
 }
 
-/* ★中央表示更新（イラスト150だけ縦基準で表示） */
+/* ★150だけ縦の長さを揃える（横幅は触らない） */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
     description.textContent = w.desc;
 
-    /* 背景更新 */
     updateBackground(w.src);
 
-    /* ★画像サイズを作品ごとに調整 */
     if (w.src.includes("イラスト150")) {
-        /* 横長 → 縦基準で合わせる */
-        mainImg.style.width = "auto";
-        mainImg.style.height = "100%";
-        mainImg.style.objectFit = "contain";
+        mainImg.style.height = "100%";  // ← 他と同じ縦の長さ
+        mainImg.style.width = "auto";   // ← 横幅は自動（触らない）
     } else {
-        /* 他の作品は横幅基準 */
-        mainImg.style.width = "100%";
-        mainImg.style.height = "100%";
-        mainImg.style.objectFit = "contain";
+        mainImg.style.height = "auto";  // ← 縦長画像は自然に
+        mainImg.style.width = "100%";   // ← 横幅はそのまま
     }
+
+    mainImg.style.objectFit = "contain";
 }
 
-/* 初期表示 */
 updateDisplay();
 updateCarousel();
 
-/* 左右矢印 */
 document.querySelector(".arrow.left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
     updateDisplay();
