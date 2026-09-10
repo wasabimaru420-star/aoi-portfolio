@@ -10,12 +10,19 @@
         margin: 0;
         padding-top: 70px;
 
-        /* ★背景はイラスト25.webpのみ（中華模様コード削除） */
+        /* ★背景はイラスト25のみ */
         background: #0a0a0a url('img/イラスト25.webp');
-        background-size: cover;
+
+        /* ★背景画像の上端をページ上に合わせる */
+        background-position: top center;
+
+        /* ★スクロールに合わせて背景も動く */
+        background-attachment: scroll;
+
+        /* ★サイト全体の縦の長さに合わせて背景を自然に伸縮 */
+        background-size: 100% auto;
+
         background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
 
         color: white;
         font-family: "Noto Sans JP", sans-serif;
@@ -58,9 +65,9 @@
         border-radius: 4px;
     }
 
-    /* HERO（kv2削除 → 背景画像のみ） */
+    /* HERO（背景画像のみなので高さだけ） */
     .hero {
-        height: 40vh; /* 画像は背景なので高さだけ調整 */
+        height: 40vh;
     }
 
     /* セクション共通 */
