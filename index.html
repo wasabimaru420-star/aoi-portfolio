@@ -54,26 +54,28 @@
     }
 
     .hero {
-        height: 400px; /* px固定 */
+        height: 40vh;
     }
 
-    /* ★ セクションの高さを完全固定（ズレ防止の最重要ポイント） */
+    /* ★ セクション全体をもっと下げる（スライドイン維持） */
     section {
-        height: 1400px; /* ← ここがズレを完全に止める */
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 80px;
+
+        padding: 500px 80px 80px; /* ← ここで位置を下げる＆間隔を縮める */
+        box-sizing: border-box;
         position: relative;
     }
 
-    /* ★ 白帯（px固定） */
+    /* ★ 白帯はセクション内の相対位置で固定（ズレない） */
     .image-backdrop {
         position: absolute;
         right: 0;
-        top: 300px;   /* セクション内での位置 */
+        top: 180px;     /* セクション内での位置 */
         width: 55%;
-        height: 480px; /* px固定 */
+        height: 45vh;   /* 画面比率に応じて変化（ズレない） */
         background: white;
         border-radius: 20px;
         z-index: -1;
@@ -91,11 +93,11 @@
         z-index: 2;
     }
 
-    /* ★ 黄色帯（px固定） */
+    /* ★ 黄色帯も相対位置で固定 */
     .big-title-box {
         position: absolute;
         left: 0;
-        top: 360px; /* 白帯に合わせて固定 */
+        top: 220px;
         width: 70%;
         height: 180px;
         background: linear-gradient(90deg, #ffe27a, #f5d76e, #eac55f);
@@ -132,18 +134,15 @@
         z-index: 2;
     }
 
-    /* ★ ABOUT の画像（px固定） */
+    /* ★ ABOUT の画像（画面比率に応じて高さ変化・面積固定） */
     .crop-img {
         position: absolute;
-        left: auto;
         right: 80px;
 
         width: 55%;
-        height: 560px; /* 白帯の下端と完全一致 */
+        height: 60vh; /* ← 画面比率に応じて変化（面積固定） */
 
-        /* 白帯の下端 = top(300px) + height(480px) = 780px
-           画像の top + height = 780px に合わせる */
-        top: 220px; /* 220 + 560 = 780 → 完全一致 */
+        top: 140px; /* 白帯より頭が飛び出す位置 */
 
         object-fit: cover;
         object-position: top; /* 頭が飛び出す */
@@ -159,10 +158,10 @@
     .normal-img {
         position: absolute;
         right: 80px;
-        top: 220px;
+        top: 140px;
 
         width: 55%;
-        height: 560px; /* 統一 */
+        height: 60vh; /* ← 統一して比率変化 */
 
         object-fit: cover;
         object-position: center;
