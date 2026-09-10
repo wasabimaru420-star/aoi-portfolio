@@ -11,10 +11,9 @@
         background: #0a0a0a;
         color: white;
         font-family: "Noto Sans JP", sans-serif;
-        overflow: hidden; /* ★スクロール禁止 */
+        overflow: hidden;
     }
 
-    /* 上部メニューバー（index.html と同じ） */
     header {
         position: fixed;
         top: 0;
@@ -26,13 +25,11 @@
         background: rgba(0,0,0,0.5);
         backdrop-filter: blur(10px);
         z-index: 1000;
-        box-sizing: border-box;
     }
 
     nav {
         display: flex;
         gap: 8px;
-        flex-wrap: wrap;
     }
 
     nav a {
@@ -49,22 +46,20 @@
         border-radius: 4px;
     }
 
-    /* 全体レイアウト（カテゴリバー右側） */
     .works-layout {
         display: grid;
-        grid-template-columns: 1fr 220px; /* ← 左が作品、右がカテゴリ */
+        grid-template-columns: 1fr 220px;
         grid-template-rows: 1fr 200px;
         height: calc(100vh - 70px);
         margin-top: 70px;
     }
 
-    /* 右側カテゴリバー（スクロールなし） */
     .category-bar {
         grid-column: 2;
         grid-row: 1 / 3;
         background: rgba(255,255,255,0.05);
         padding: 20px;
-        overflow-y: hidden; /* ← スクロール禁止 */
+        overflow-y: hidden;
         border-left: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -80,7 +75,6 @@
         opacity: 1;
     }
 
-    /* 中央の作品表示エリア */
     .work-display {
         padding: 40px;
         display: flex;
@@ -101,7 +95,6 @@
         opacity: 0.9;
     }
 
-    /* 下部カルーセル */
     .work-carousel {
         grid-column: 1 / 3;
         display: flex;
@@ -162,33 +155,32 @@
 
 <div class="works-layout">
 
-    <!-- 右側カテゴリバー -->
+    <!-- ★カテゴリは全部残す -->
     <aside class="category-bar">
+        <div class="category">all</div>
+        <div class="category">illustration</div>
+        <div class="category">character</div>
         <div class="category">vtuber</div>
         <div class="category">keyvisual</div>
+        <div class="category">minicharacter</div>
+        <div class="category">other</div>
     </aside>
 
-    <!-- 中央の作品表示エリア -->
     <main class="work-display">
         <img id="main-work-img" src="img/イラスト148.webp">
-        <div class="work-description">
-            VTuber作品：イラスト148
-        </div>
+        <div class="work-description">VTuber作品：イラスト148</div>
     </main>
 
-    <!-- 下部の作品アイコンカルーセル -->
     <div class="work-carousel">
         <button class="arrow left">←</button>
-
         <div class="carousel-track"></div>
-
         <button class="arrow right">→</button>
     </div>
 
 </div>
 
 <script>
-/* 作品データ（カテゴリ別） */
+/* ★作品データ（カテゴリ別） */
 const works = {
     vtuber: [
         { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
@@ -199,10 +191,16 @@ const works = {
     keyvisual: [
         { src: "img/kv2.webp", desc: "キービジュアル：kv2" },
         { src: "img/イラスト14.webp", desc: "キービジュアル：イラスト14" }
-    ]
+    ],
+
+    illustration: [],
+    character: [],
+    minicharacter: [],
+    other: [],
+
+    all: []  // 必要なら後で自動生成にする
 };
 
-/* 初期表示は vtuber の1枚目 */
 let currentCategory = "vtuber";
 let currentIndex = 0;
 
@@ -210,17 +208,23 @@ const mainImg = document.getElementById("main-work-img");
 const description = document.querySelector(".work-description");
 const track = document.querySelector(".carousel-track");
 
-/* カテゴリを押したら作品一覧を切り替え */
 document.querySelectorAll(".category").forEach(cat => {
     cat.addEventListener("click", () => {
         currentCategory = cat.textContent.trim();
         currentIndex = 0;
+
+        if (works[currentCategory].length === 0) {
+            mainImg.src = "";
+            description.textContent = "このカテゴリにはまだ作品がありません。";
+            track.innerHTML = "";
+            return;
+        }
+
         updateDisplay();
         updateCarousel();
     });
 });
 
-/* 下のアイコンを押したら中央の作品を切り替え */
 function updateCarousel() {
     track.innerHTML = "";
     works[currentCategory].forEach((w, i) => {
@@ -235,18 +239,15 @@ function updateCarousel() {
     });
 }
 
-/* 中央の作品表示を更新 */
 function updateDisplay() {
     const w = works[currentCategory][currentIndex];
     mainImg.src = w.src;
     description.textContent = w.desc;
 }
 
-/* 初期表示 */
 updateDisplay();
 updateCarousel();
 
-/* 左右矢印でページ送り */
 document.querySelector(".arrow.left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
     updateDisplay();
