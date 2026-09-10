@@ -197,6 +197,79 @@
     </div>
 
 </div>
+    
+<script>
+/* 作品データ（カテゴリ別） */
+const works = {
+    vtuber: [
+        { src: "img/イラスト10.webp", desc: "VTuber作品：イラスト10" },
+        { src: "img/イラスト9.webp", desc: "VTuber作品：イラスト9" },
+        { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
+        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" },
+        { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
+    ],
+
+    keyvisual: [
+        { src: "img/kv2.webp", desc: "キービジュアル：kv2" },
+        { src: "img/イラスト14.webp", desc: "キービジュアル：イラスト14" }
+    ]
+};
+
+/* 初期表示は vtuber の1枚目 */
+let currentCategory = "vtuber";
+let currentIndex = 0;
+
+const mainImg = document.getElementById("main-work-img");
+const description = document.querySelector(".work-description");
+const track = document.querySelector(".carousel-track");
+
+/* カテゴリを押したら作品一覧を切り替え */
+document.querySelectorAll(".category").forEach(cat => {
+    cat.addEventListener("click", () => {
+        currentCategory = cat.textContent.trim();
+        currentIndex = 0;
+        updateDisplay();
+        updateCarousel();
+    });
+});
+
+/* 下のアイコンを押したら中央の作品を切り替え */
+function updateCarousel() {
+    track.innerHTML = "";
+    works[currentCategory].forEach((w, i) => {
+        const img = document.createElement("img");
+        img.src = w.src;
+        img.className = "thumb";
+        img.addEventListener("click", () => {
+            currentIndex = i;
+            updateDisplay();
+        });
+        track.appendChild(img);
+    });
+}
+
+/* 中央の作品表示を更新 */
+function updateDisplay() {
+    const w = works[currentCategory][currentIndex];
+    mainImg.src = w.src;
+    description.textContent = w.desc;
+}
+
+/* 初期表示 */
+updateDisplay();
+updateCarousel();
+
+/* 左右矢印でページ送り */
+document.querySelector(".arrow.left").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
+    updateDisplay();
+});
+
+document.querySelector(".arrow.right").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % works[currentCategory].length;
+    updateDisplay();
+});
+</script>
 
 <script>
     /* 作品切り替え */
