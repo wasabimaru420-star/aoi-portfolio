@@ -112,32 +112,50 @@
         z-index: 2;
     }
 
-    /* 説明文 → 白帯右下付近 */
-    .text {
+    /* 白帯右下の説明文＋もっと見るを横並びにするコンテナ */
+    .info-box {
         position: absolute;
         right: 40px;
-        top: calc(180px + 45vh - 140px); /* 白帯の下端から少し上 */
-        width: 45%;
+        top: calc(180px + 45vh - 80px); /* 白帯の下端付近 */
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        z-index: 4;
+    }
+
+    /* 説明文（info-box内で横並び） */
+    .text {
+        position: static;
+        width: auto;
         font-size: 20px;
         color: #444;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: 1s ease;
-        z-index: 3;
+        opacity: 1;
+        transform: none;
+    }
+
+    /* もっと見るボタン（info-box内で横並び） */
+    .more-btn {
+        position: static;
+        background: black;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
     }
 
     .show-title { opacity: 1; transform: translateY(0); }
     .show-text { opacity: 1; transform: translateY(0); }
 
-    /* イラスト196：膝から上＋下端を白帯下端に一致させる */
+    /* イラスト196：下端を白帯下端に完全一致させる */
     .crop-img {
         position: absolute;
         right: 80px;
         width: 55%;
-        height: 60vh; /* 膝から上が見えるくらいの高さ */
-        top: calc(180px + 45vh - 60vh); /* 下端が白帯下端と一致するように計算 */
+        height: 60vh; /* 膝から上が見える高さ */
+        top: calc(180px + 45vh - 60vh); /* 下端が白帯下端と一致する計算式 */
         object-fit: cover;
-        object-position: top; /* 上側優先表示（膝から上） */
+        object-position: top;
         border-radius: 10px;
         opacity: 0;
         transform: translateX(50px);
@@ -145,7 +163,7 @@
         z-index: 2;
     }
 
-    /* WORKS の画像（いじらない方針） */
+    /* WORKS の画像（触らない） */
     .normal-img {
         position: absolute;
         right: 80px;
@@ -162,20 +180,6 @@
     }
 
     .show-img { opacity: 1; transform: translateX(0); }
-
-    /* もっと見る → 白帯右下に配置 */
-    .more-btn {
-        position: absolute;
-        right: 40px;
-        top: calc(180px + 45vh - 80px); /* 白帯下端付近の右下 */
-        background: black;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 6px;
-        text-decoration: none;
-        font-weight: bold;
-        z-index: 4;
-    }
 </style>
 </head>
 
@@ -202,13 +206,12 @@
     <div class="section-number">02</div>
     <div class="big-title">ABOUT</div>
 
-    <div class="text">
-        あなたのプロフィールや制作スタイルを紹介するセクション
-    </div>
-
     <img class="crop-img" src="img/イラスト196.webp" alt="">
 
-    <a class="more-btn" href="about.html">もっと見る</a>
+    <div class="info-box">
+        <div class="text">あなたのプロフィールや制作スタイルを紹介するセクション</div>
+        <a class="more-btn" href="about.html">もっと見る</a>
+    </div>
 </section>
 
 <!-- 03 WORKS -->
@@ -219,13 +222,12 @@
     <div class="section-number">03</div>
     <div class="big-title">WORKS</div>
 
-    <div class="text">
-        イラスト作品一覧を紹介するセクション
-    </div>
-
     <img class="normal-img" src="img/イラスト14.webp" alt="">
 
-    <a class="more-btn" href="works.html">もっと見る</a>
+    <div class="info-box">
+        <div class="text">イラスト作品一覧を紹介するセクション</div>
+        <a class="more-btn" href="works.html">もっと見る</a>
+    </div>
 </section>
 
 <!-- 04 COMMISSION -->
@@ -236,11 +238,10 @@
     <div class="section-number">04</div>
     <div class="big-title">COMMISSION</div>
 
-    <div class="text">
-        依頼料金や制作の流れを紹介するセクション
+    <div class="info-box">
+        <div class="text">依頼料金や制作の流れを紹介するセクション</div>
+        <a class="more-btn" href="commission.html">もっと見る</a>
     </div>
-
-    <a class="more-btn" href="commission.html">もっと見る</a>
 </section>
 
 <!-- 05 CONTACT -->
@@ -251,11 +252,10 @@
     <div class="section-number">05</div>
     <div class="big-title">CONTACT</div>
 
-    <div class="text">
-        依頼フォームや連絡先を紹介するセクション
+    <div class="info-box">
+        <div class="text">依頼フォームや連絡先を紹介するセクション</div>
+        <a class="more-btn" href="contact.html">もっと見る</a>
     </div>
-
-    <a class="more-btn" href="contact.html">もっと見る</a>
 </section>
 
 <script>
@@ -268,7 +268,6 @@
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
-                sec.querySelector(".text").classList.add("show-text");
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.add("show-img");
@@ -277,7 +276,6 @@
             if (rect.bottom < 0 || rect.top > window.innerHeight) {
                 sec.querySelector(".section-number").classList.remove("show-title");
                 sec.querySelector(".big-title").classList.remove("show-title");
-                sec.querySelector(".text").classList.remove("show-text");
 
                 const img = sec.querySelector("img");
                 if (img) img.classList.remove("show-img");
