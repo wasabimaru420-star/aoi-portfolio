@@ -58,6 +58,7 @@
         padding: 900px 80px 60px;
         box-sizing: border-box;
         position: relative;
+        transform: translateY(500px);
     }
 
     /* 白帯 */
@@ -112,28 +113,27 @@
         z-index: 2;
     }
 
-    /* 白帯右下の説明文＋もっと見るを横並びにするコンテナ */
+    /* タイトル横の説明文（新設） */
+    .title-text {
+        position: absolute;
+        left: 20px;
+        top: 380px;
+        font-size: 22px;
+        color: #444;
+        z-index: 3;
+    }
+
+    /* 白帯右下のもっと見るボタン（説明文は削除済み） */
     .info-box {
         position: absolute;
         right: 40px;
-        top: calc(180px + 45vh - 60px); /* 白帯の下端付近 */
+        top: calc(180px + 45vh - 60px);
         display: flex;
         align-items: end;
         gap: 20px;
         z-index: 4;
     }
 
-    /* 説明文（info-box内で横並び） */
-    .text {
-        position: static;
-        width: auto;
-        font-size: 20px;
-        color: #444;
-        opacity: 1;
-        transform: none;
-    }
-
-    /* もっと見るボタン（info-box内で横並び） */
     .more-btn {
         position: static;
         background: black;
@@ -142,24 +142,24 @@
         border-radius: 6px;
         text-decoration: none;
         font-weight: bold;
+        transition: 0.2s ease;
     }
+
     .more-btn:hover {
-    background: linear-gradient(90deg, #ffe27a, #f5d76e, #eac55f);
-    color: black;
-    transform: scale(1.05);
-    transition: 0.2s ease;
-}
+        background: linear-gradient(90deg, #ffe27a, #f5d76e, #eac55f);
+        color: black;
+        transform: scale(1.05);
+    }
 
     .show-title { opacity: 1; transform: translateY(0); }
-    .show-text { opacity: 1; transform: translateY(0); }
 
-    /* イラスト196：下端を白帯下端に完全一致させる */
+    /* イラスト196 */
     .crop-img {
         position: absolute;
         right: 80px;
         width: 55%;
-        height: 60vh; /* 膝から上が見える高さ */
-        top: calc(180px + 45vh - 60vh); /* 下端が白帯下端と一致する計算式 */
+        height: 60vh;
+        top: calc(180px + 45vh - 60vh);
         object-fit: cover;
         object-position: top;
         border-radius: 10px;
@@ -169,7 +169,7 @@
         z-index: 2;
     }
 
-    /* WORKS の画像（触らない） */
+    /* WORKS の画像 */
     .normal-img {
         position: absolute;
         right: 80px;
@@ -186,15 +186,11 @@
     }
 
     .show-img { opacity: 1; transform: translateX(0); }
-    
-    /* 02,03,04,05 セクション同士の距離を縮める */
-section + section {
-    margin-top: -200px; /* 好きな量に調整可能 */
-}
-    
-section {
-    transform: translateY(500px);
-}
+
+    /* セクション間の距離 */
+    section + section {
+        margin-top: -200px;
+    }
 
 </style>
 </head>
@@ -222,10 +218,11 @@ section {
     <div class="section-number">02</div>
     <div class="big-title">ABOUT</div>
 
+    <div class="title-text">あなたのプロフィールや制作スタイルを紹介するセクション</div>
+
     <img class="crop-img" src="img/イラスト196.webp" alt="">
 
     <div class="info-box">
-        <div class="text">あなたのプロフィールや制作スタイルを紹介するセクション</div>
         <a class="more-btn" href="about.html">もっと見る</a>
     </div>
 </section>
@@ -238,10 +235,11 @@ section {
     <div class="section-number">03</div>
     <div class="big-title">WORKS</div>
 
+    <div class="title-text">イラスト作品一覧を紹介するセクション</div>
+
     <img class="normal-img" src="img/イラスト14.webp" alt="">
 
     <div class="info-box">
-        <div class="text">イラスト作品一覧を紹介するセクション</div>
         <a class="more-btn" href="works.html">もっと見る</a>
     </div>
 </section>
@@ -254,8 +252,9 @@ section {
     <div class="section-number">04</div>
     <div class="big-title">COMMISSION</div>
 
+    <div class="title-text">依頼料金や制作の流れを紹介するセクション</div>
+
     <div class="info-box">
-        <div class="text">依頼料金や制作の流れを紹介するセクション</div>
         <a class="more-btn" href="commission.html">もっと見る</a>
     </div>
 </section>
@@ -268,8 +267,9 @@ section {
     <div class="section-number">05</div>
     <div class="big-title">CONTACT</div>
 
+    <div class="title-text">依頼フォームや連絡先を紹介するセクション</div>
+
     <div class="info-box">
-        <div class="text">依頼フォームや連絡先を紹介するセクション</div>
         <a class="more-btn" href="contact.html">もっと見る</a>
     </div>
 </section>
@@ -289,7 +289,7 @@ section {
                 if (img) img.classList.add("show-img");
             }
 
-            if  (rect.top > window.innerHeight) {
+            if (rect.top > window.innerHeight) {
                 sec.querySelector(".section-number").classList.remove("show-title");
                 sec.querySelector(".big-title").classList.remove("show-title");
 
