@@ -53,16 +53,12 @@
         height: 40vh;
     }
 
+    /* ▼ セクション全体を下げる（スライドイン判定を壊さない方法） */
     section {
         min-height: 100vh;
-        padding: 900px 80px 60px;
+        padding: 1150px 80px 60px; /* ← 900px → 1150px に変更 */
         box-sizing: border-box;
         position: relative;
-    }
-
-    /* ▼ 全セクションの中身をまとめて下げる */
-    .section-wrapper {
-        transform: translateY(250px);
     }
 
     /* 白帯 */
@@ -128,14 +124,11 @@
     }
 
     .text {
-        position: static;
-        width: auto;
         font-size: 20px;
         color: #444;
     }
 
     .more-btn {
-        position: static;
         background: black;
         color: white;
         padding: 10px 20px;
@@ -166,7 +159,6 @@
         right: 80px;
         top: 200px;
         width: 50%;
-        height: auto;
         max-height: 38vh;
         object-fit: contain;
         border-radius: 10px;
@@ -178,6 +170,7 @@
 
     .show-img { opacity: 1; transform: translateX(0); }
 
+    /* セクション間隔を詰める */
     section + section {
         margin-top: -200px;
     }
@@ -202,69 +195,61 @@
 
 <!-- 02 ABOUT -->
 <section id="about">
-    <div class="section-wrapper">
-        <div class="image-backdrop"></div>
-        <div class="big-title-box"></div>
+    <div class="image-backdrop"></div>
+    <div class="big-title-box"></div>
 
-        <div class="section-number">02</div>
-        <div class="big-title">ABOUT</div>
+    <div class="section-number">02</div>
+    <div class="big-title">ABOUT</div>
 
-        <img class="crop-img" src="img/イラスト196.webp" alt="">
+    <img class="crop-img" src="img/イラスト196.webp" alt="">
 
-        <div class="info-box">
-            <div class="text">あなたのプロフィールや制作スタイルを紹介するセクション</div>
-            <a class="more-btn" href="about.html">もっと見る</a>
-        </div>
+    <div class="info-box">
+        <div class="text">あなたのプロフィールや制作スタイルを紹介するセクション</div>
+        <a class="more-btn" href="about.html">もっと見る</a>
     </div>
 </section>
 
 <!-- 03 WORKS -->
 <section id="works">
-    <div class="section-wrapper">
-        <div class="image-backdrop"></div>
-        <div class="big-title-box"></div>
+    <div class="image-backdrop"></div>
+    <div class="big-title-box"></div>
 
-        <div class="section-number">03</div>
-        <div class="big-title">WORKS</div>
+    <div class="section-number">03</div>
+    <div class="big-title">WORKS</div>
 
-        <img class="normal-img" src="img/イラスト14.webp" alt="">
+    <img class="normal-img" src="img/イラスト14.webp" alt="">
 
-        <div class="info-box">
-            <div class="text">イラスト作品一覧を紹介するセクション</div>
-            <a class="more-btn" href="works.html">もっと見る</a>
-        </div>
+    <div class="info-box">
+        <div class="text">イラスト作品一覧を紹介するセクション</div>
+        <a class="more-btn" href="works.html">もっと見る</a>
     </div>
 </section>
 
 <!-- 04 COMMISSION -->
 <section id="commission">
-    <div class="section-wrapper">
-        <div class="image-backdrop"></div>
-        <div class="big-title-box"></div>
+    <div class="image-backdrop"></div>
+    <div class="big-title-box"></div>
 
-        <div class="section-number">04</div>
-        <div class="big-title">COMMISSION</div>
+    <div class="section-number">04</div>
+    <div class="big-title">COMMISSION</div>
 
-        <div class="info-box">
-            <div class="text">依頼料金や制作の流れを紹介するセクション</div>
-            <a class="more-btn" href="commission.html">もっと見る</a>
-        </div>
+    <div class="info-box">
+        <div class="text">依頼料金や制作の流れを紹介するセクション</div>
+        <a class="more-btn" href="commission.html">もっと見る</a>
     </div>
 </section>
 
 <!-- 05 CONTACT -->
 <section id="contact">
-    <div class="section-wrapper">
-        <div class="image-backdrop"></div>
-        <div class="big-title-box"></div>
+    <div class="image-backdrop"></div>
+    <div class="big-title-box"></div>
 
-        <div class="section-number">05</div>
-        <div class="big-title">CONTACT</div>
+    <div class="section-number">05</div>
+    <div class="big-title">CONTACT</div>
 
-        <div class="info-box">
-            <div class="text">依頼フォームや連絡先を紹介するセクション</div>
-            <a class="more-btn" href="contact.html">もっと見る</a>
-        </div>
+    <div class="info-box">
+        <div class="text">依頼フォームや連絡先を紹介するセクション</div>
+        <a class="more-btn" href="contact.html">もっと見る</a>
     </div>
 </section>
 
@@ -275,7 +260,7 @@
         sections.forEach(sec => {
             const rect = sec.getBoundingClientRect();
 
-            /* ▼ スライドインだけ残す */
+            /* ▼ スライドインだけ残す（スライドアウトは消す） */
             if (rect.top < window.innerHeight && rect.bottom > 0) {
                 sec.querySelector(".section-number").classList.add("show-title");
                 sec.querySelector(".big-title").classList.add("show-title");
