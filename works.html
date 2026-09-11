@@ -220,12 +220,12 @@
         transform: scale(1.1);
     }
 
-    /* ★ モーダル画像のイベントを無効化（戻るボタン・ズーム・ドラッグを有効にする） */
+    /* モーダル画像のイベントを無効化（戻るボタン・ズーム・ドラッグを有効にする） */
     #modal-img {
         pointer-events: none;
     }
 
-    /* ★ モーダル内のスクロール挙動を安定させる */
+    /* モーダル内のスクロール挙動を安定させる */
     #img-modal {
         overflow: hidden;
     }
@@ -277,208 +277,7 @@
 
 <div class="show-carousel">◀</div>
 
-<script>
-const works = {
-    vtuber: [
-        { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
-        { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" },
-        { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
-    ],
-
-    keyvisual: [
-        { src: "img/kv2.webp", desc: "キービジュアル：kv2" },
-        { src: "img/イラスト14.webp", desc: "キービジュアル：イラスト14" }
-    ],
-
-    illustration: [],
-    character: [],
-    minicharacter: [],
-    other: [],
-    all: []
-};
-
-const categoryNumber = {
-    illustration: 1,
-    character: 2,
-    vtuber: 3,
-    keyvisual: 4,
-    minicharacter: 5,
-    other: 6
-};
-
-Object.keys(works).forEach(cat => {
-    if (cat === "all") return;
-    const num = categoryNumber[cat];
-    works[cat].forEach((w, i) => {
-        w.code = `${num}-${i+1}`;
-        works.all.push({
-            src: w.src,
-            desc: `${w.desc}（${w.code}）`
-        });
-    });
-});
-
-let currentCategory = "vtuber";
-let currentIndex = 0;
-
-const mainImg = document.getElementById("main-work-img");
-const description = document.querySelector(".work-description");
-const track = document.querySelector(".carousel-track");
-const blurBg = document.querySelector(".blur-bg");
-
-function updateBackground(src) {
-    blurBg.style.backgroundImage = `url(${src})`;
-}
-
-function updateFrameClass() {
-    const frame = document.querySelector(".img-frame");
-    frame.className = "img-frame";
-}
-
-document.querySelectorAll(".category").forEach(cat => {
-    cat.addEventListener("click", () => {
-        currentCategory = cat.textContent.trim();
-        currentIndex = 0;
-
-        if (works[currentCategory].length === 0) {
-            mainImg.src = "";
-            description.textContent = "このカテゴリにはまだ作品がありません。";
-            track.innerHTML = "";
-            updateBackground("");
-            return;
-        }
-
-        updateDisplay();
-        updateCarousel();
-    });
-});
-
-function updateCarousel() {
-    track.innerHTML = "";
-    works[currentCategory].forEach((w, i) => {
-        const img = document.createElement("img");
-        img.src = w.src;
-        img.className = "thumb";
-        img.addEventListener("click", () => {
-            currentIndex = i;
-            updateDisplay();
-        });
-        track.appendChild(img);
-    });
-}
-
-function updateDisplay() {
-    const w = works[currentCategory][currentIndex];
-    mainImg.src = w.src;
-    description.textContent = w.desc;
-
-    updateBackground(w.src);
-    updateFrameClass();
-
-    if (currentCategory === "keyvisual") {
-        mainImg.classList.add("keyvisual-img");
-    } else {
-        mainImg.classList.remove("keyvisual-img");
-    }
-
-    mainImg.style.width = "auto";
-    mainImg.style.height = "auto";
-    mainImg.style.objectFit = "contain";
-}
-
-updateDisplay();
-updateCarousel();
-
-/* 隠すボタン */
-document.querySelector(".toggle-carousel").addEventListener("click", () => {
-    document.querySelector(".work-carousel").classList.add("hidden");
-    document.querySelector(".show-carousel").style.display = "flex";
-});
-
-/* 表示ボタン */
-document.querySelector(".show-carousel").addEventListener("click", () => {
-    document.querySelector(".work-carousel").classList.remove("hidden");
-    document.querySelector(".show-carousel").style.display = "none";
-});
-
-/* 左右ボタン */
-document.querySelector(".arrow.left").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
-    updateDisplay();
-});
-
-document.querySelector(".arrow.right").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % works[currentCategory].length;
-    updateDisplay();
-});
-
-/* ★ 画像クリックで拡大表示 */
-mainImg.addEventListener("click", () => {
-    const modal = document.getElementById("img-modal");
-    const modalImg = document.getElementById("modal-img");
-
-    modalImg.src = mainImg.src;
-    modal.style.display = "flex";
-});
-
-/* ★ モーダルクリックで閉じる */
-document.getElementById("img-modal").addEventListener("click", () => {
-    document.getElementById("img-modal").style.display = "none";
-});
-
-/* ★ モーダル内の画像操作（ズーム＋ドラッグ） */
-const modal = document.getElementById("img-modal");
-const modalImg = document.getElementById("modal-img");
-const closeBtn = document.getElementById("modal-close-btn");
-
-let scale = 1;
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-let imgX = 0;
-let imgY = 0;
-
-/* ズーム（スクロール） */
-modal.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    scale += e.deltaY * -0.001;
-    scale = Math.min(Math.max(0.5, scale), 5);
-    modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
-});
-
-/* ドラッグ開始（長押し） */
-modal.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-});
-
-/* ドラッグ中 */
-modal.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    imgX += (e.clientX - startX) * 0.5;
-    imgY += (e.clientY - startY) * 0.5;
-    startX = e.clientX;
-    startY = e.clientY;
-    modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
-});
-
-/* ドラッグ終了 */
-modal.addEventListener("mouseup", () => {
-    isDragging = false;
-});
-
-/* 戻るボタンで閉じる */
-closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    scale = 1;
-    imgX = 0;
-    imgY = 0;
-    modalImg.style.transform = "none";
-});
-</script>
-
-<!-- ★ 画像拡大表示モーダル -->
+<!-- 画像拡大表示モーダル -->
 <div id="img-modal" style="
     display:none;
     position:fixed;
@@ -498,21 +297,219 @@ closeBtn.addEventListener("click", () => {
         border-radius:10px;
     ">
 
-    <!-- ★ モーダル右下の戻るボタン -->
-<button id="modal-close-btn" style="
-    position:absolute;
-    bottom:20px;
-    right:20px;
-    padding:10px 20px;
-    font-size:18px;
-    border:none;
-    border-radius:6px;
-    background:white;
-    color:black;
-    cursor:pointer;
-">戻る</button>
-
+    <!-- モーダル右下の戻るボタン -->
+    <button id="modal-close-btn" style="
+        position:absolute;
+        bottom:20px;
+        right:20px;
+        padding:10px 20px;
+        font-size:18px;
+        border:none;
+        border-radius:6px;
+        background:white;
+        color:black;
+        cursor:pointer;
+    ">戻る</button>
 </div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const works = {
+        vtuber: [
+            { src: "img/イラスト148.webp", desc: "VTuber作品：イラスト148" },
+            { src: "img/イラスト150.webp", desc: "VTuber作品：イラスト150" },
+            { src: "img/イラスト196.webp", desc: "VTuber作品：イラスト196" }
+        ],
+
+        keyvisual: [
+            { src: "img/kv2.webp", desc: "キービジュアル：kv2" },
+            { src: "img/イラスト14.webp", desc: "キービジュアル：イラスト14" }
+        ],
+
+        illustration: [],
+        character: [],
+        minicharacter: [],
+        other: [],
+        all: []
+    };
+
+    const categoryNumber = {
+        illustration: 1,
+        character: 2,
+        vtuber: 3,
+        keyvisual: 4,
+        minicharacter: 5,
+        other: 6
+    };
+
+    Object.keys(works).forEach(cat => {
+        if (cat === "all") return;
+        const num = categoryNumber[cat];
+        works[cat].forEach((w, i) => {
+            w.code = `${num}-${i+1}`;
+            works.all.push({
+                src: w.src,
+                desc: `${w.desc}（${w.code}）`
+            });
+        });
+    });
+
+    let currentCategory = "vtuber";
+    let currentIndex = 0;
+
+    const mainImg = document.getElementById("main-work-img");
+    const description = document.querySelector(".work-description");
+    const track = document.querySelector(".carousel-track");
+    const blurBg = document.querySelector(".blur-bg");
+
+    function updateBackground(src) {
+        blurBg.style.backgroundImage = `url(${src})`;
+    }
+
+    function updateFrameClass() {
+        const frame = document.querySelector(".img-frame");
+        frame.className = "img-frame";
+    }
+
+    document.querySelectorAll(".category").forEach(cat => {
+        cat.addEventListener("click", () => {
+            currentCategory = cat.textContent.trim();
+            currentIndex = 0;
+
+            if (works[currentCategory].length === 0) {
+                mainImg.src = "";
+                description.textContent = "このカテゴリにはまだ作品がありません。";
+                track.innerHTML = "";
+                updateBackground("");
+                return;
+            }
+
+            updateDisplay();
+            updateCarousel();
+        });
+    });
+
+    function updateCarousel() {
+        track.innerHTML = "";
+        works[currentCategory].forEach((w, i) => {
+            const img = document.createElement("img");
+            img.src = w.src;
+            img.className = "thumb";
+            img.addEventListener("click", () => {
+                currentIndex = i;
+                updateDisplay();
+            });
+            track.appendChild(img);
+        });
+    }
+
+    function updateDisplay() {
+        const w = works[currentCategory][currentIndex];
+        mainImg.src = w.src;
+        description.textContent = w.desc;
+
+        updateBackground(w.src);
+        updateFrameClass();
+
+        if (currentCategory === "keyvisual") {
+            mainImg.classList.add("keyvisual-img");
+        } else {
+            mainImg.classList.remove("keyvisual-img");
+        }
+
+        mainImg.style.width = "auto";
+        mainImg.style.height = "auto";
+        mainImg.style.objectFit = "contain";
+    }
+
+    updateDisplay();
+    updateCarousel();
+
+    /* 隠すボタン */
+    document.querySelector(".toggle-carousel").addEventListener("click", () => {
+        document.querySelector(".work-carousel").classList.add("hidden");
+        document.querySelector(".show-carousel").style.display = "flex";
+    });
+
+    /* 表示ボタン */
+    document.querySelector(".show-carousel").addEventListener("click", () => {
+        document.querySelector(".work-carousel").classList.remove("hidden");
+        document.querySelector(".show-carousel").style.display = "none";
+    });
+
+    /* 左右ボタン */
+    document.querySelector(".arrow.left").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
+        updateDisplay();
+    });
+
+    document.querySelector(".arrow.right").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % works[currentCategory].length;
+        updateDisplay();
+    });
+
+    /* 画像クリックで拡大表示 */
+    mainImg.addEventListener("click", () => {
+        const modal = document.getElementById("img-modal");
+        const modalImg = document.getElementById("modal-img");
+
+        modalImg.src = mainImg.src;
+        modal.style.display = "flex";
+    });
+
+    /* モーダル内の画像操作（ズーム＋ドラッグ） */
+    const modal = document.getElementById("img-modal");
+    const modalImg = document.getElementById("modal-img");
+    const closeBtn = document.getElementById("modal-close-btn");
+
+    let scale = 1;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let imgX = 0;
+    let imgY = 0;
+
+    /* ズーム（スクロール） */
+    modal.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        scale += e.deltaY * -0.001;
+        scale = Math.min(Math.max(0.5, scale), 5);
+        modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
+    });
+
+    /* ドラッグ開始（長押し） */
+    modal.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+    });
+
+    /* ドラッグ中 */
+    modal.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        imgX += (e.clientX - startX) * 0.5;
+        imgY += (e.clientY - startY) * 0.5;
+        startX = e.clientX;
+        startY = e.clientY;
+        modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
+    });
+
+    /* ドラッグ終了 */
+    modal.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
+
+    /* 戻るボタンで閉じる */
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        modal.style.display = "none";
+        scale = 1;
+        imgX = 0;
+        imgY = 0;
+        modalImg.style.transform = "none";
+    });
+});
+</script>
 
 </body>
 </html>
