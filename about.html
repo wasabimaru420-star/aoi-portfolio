@@ -166,7 +166,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     let animationId = null;
     let timeout;
 
-    /* ===== 反射アニメーション設定 ===== */
+    /* ===== 反射枠の設定 ===== */
     const leftLimit = window.innerWidth * 0.40;  // イラスト25の右端
     const rightLimit = window.innerWidth;        // 画面右端
     const topLimit = 0;
@@ -175,13 +175,13 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     const speeds = [];
 
     balls.forEach((ball, i) => {
-        // 初期位置（右側60%の中でランダム）
+        // 初期位置（反射枠内でランダム）
         let x = leftLimit + Math.random() * (rightLimit - leftLimit - 110);
         let y = Math.random() * (bottomLimit - 110);
 
-        // ランダム速度（端まで届く強さ）
-        let vx = (Math.random() * 6 + 4) * (Math.random() < 0.5 ? -1 : 1);
-        let vy = (Math.random() * 6 + 4) * (Math.random() < 0.5 ? -1 : 1);
+        // 端まで届く強さの速度
+        let vx = (Math.random() * 8 + 6) * (Math.random() < 0.5 ? -1 : 1);
+        let vy = (Math.random() * 8 + 6) * (Math.random() < 0.5 ? -1 : 1);
 
         speeds.push({ x, y, vx, vy });
 
