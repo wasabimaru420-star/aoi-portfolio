@@ -3,25 +3,21 @@ body {
     background: #0a0a0a;
     color: white;
     font-family: "Noto Sans JP", sans-serif;
-    overflow: hidden; /* ★スクロール禁止 */
+    overflow: hidden; /* スクロール禁止 */
 }
 
 header {
     position: fixed;
     top: 0;
     width: 100%;
+    height: 70px; /* ★高さを固定して見切れ防止 */
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center; /* ★中央揃えでズレ防止 */
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
     z-index: 1000;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 10px;
 }
 
 .blur-bg {
@@ -38,10 +34,13 @@ nav a {
 }
 
 .about-layout {
-    margin-top: 80px;
-    height: calc(100vh - 80px); /* ★画面ぴったり */
+    position: fixed;
+    top: 70px; /* ★ヘッダーの高さ分ずらす */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px); /* ★画面ぴったり */
     display: grid;
-    grid-template-columns: 40% 60%; /* ★左画像・右テキストの比率 */
+    grid-template-columns: 40% 60%;
 }
 
 .left-img-frame {
@@ -61,8 +60,9 @@ nav a {
     padding: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* ★中央寄せで美しく */
+    justify-content: center; /* ★中央揃えで消えない */
     gap: 20px;
+    overflow: hidden; /* ★テキストがはみ出さない */
 }
 
 .about-title {
