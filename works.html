@@ -96,16 +96,27 @@
         gap: 40px;
     }
 
-    /* ★枠は固定、画像は枠内に縮小して全体表示 */
+    /* ★ 枠は通常カテゴリのみ。vtuber は枠を消す */
     .img-frame {
-        width: 700px;
-        height: 900px;
         display: flex;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
     }
 
+    /* keyvisual は枠あり（元に戻す） */
+    .img-frame.keyvisual-frame {
+        width: 700px;
+        height: 900px;
+    }
+
+    /* vtuber は枠なし（縮小倍率維持） */
+    .img-frame.vtuber-frame {
+        width: auto;
+        height: auto;
+    }
+
+    /* 画像は縮小倍率を維持したまま表示 */
     #main-work-img {
         width: auto;
         height: auto;
@@ -149,6 +160,7 @@
         pointer-events: none;
     }
 
+    /* 隠すボタン（左端） */
     .toggle-carousel {
         position: absolute;
         left: 0;
@@ -163,6 +175,7 @@
         transition: 0.3s;
     }
 
+    /* 表示ボタン（右メニューバーに接触） */
     .show-carousel {
         position: fixed;
         right: 220px;
@@ -241,7 +254,7 @@
     </aside>
 
     <main class="work-display">
-        <div class="img-frame">
+        <div class="img-frame vtuber-frame">
             <img id="main-work-img" src="img/イラスト148.webp">
         </div>
         <div class="work-description">VTuber作品：イラスト148</div>
@@ -278,6 +291,7 @@ const works = {
     all: []
 };
 
+/* カテゴリ番号 */
 const categoryNumber = {
     illustration: 1,
     character: 2,
@@ -287,6 +301,7 @@ const categoryNumber = {
     other: 6
 };
 
+/* all を自動生成 */
 Object.keys(works).forEach(cat => {
     if (cat === "all") return;
     const num = categoryNumber[cat];
@@ -311,9 +326,17 @@ function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
 }
 
+/* 枠切り替え */
 function updateFrameClass() {
     const frame = document.querySelector(".img-frame");
+
     frame.className = "img-frame";
+
+    if (currentCategory === "vtuber") {
+        frame.classList.add("vtuber-frame");
+    } else if (currentCategory === "keyvisual") {
+        frame.classList.add("keyvisual-frame");
+    }
 }
 
 document.querySelectorAll(".category").forEach(cat => {
@@ -364,6 +387,19 @@ function updateDisplay() {
 updateDisplay();
 updateCarousel();
 
+/* シークバー隠しボタン */
+document.querySelector(".toggle-carousel").addEventListener("click", () => {
+    document.querySelector(".work-carousel").classList.add("hidden");
+    document.querySelector(".show-carousel").style.display = "block";
+});
+
+/* シークバー再表示ボタン */
+document.querySelector(".show-carousel").addEventListener("click", () => {
+    document.querySelector(".work-carousel").classList.remove("hidden");
+    document.querySelector(".show-carousel").style.display = "none";
+});
+
+/* 左右ボタン */
 document.querySelector(".arrow.left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
     updateDisplay();
@@ -372,16 +408,6 @@ document.querySelector(".arrow.left").addEventListener("click", () => {
 document.querySelector(".arrow.right").addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % works[currentCategory].length;
     updateDisplay();
-});
-
-document.querySelector(".toggle-carousel").addEventListener("click", () => {
-    document.querySelector(".work-carousel").classList.add("hidden");
-    document.querySelector(".show-carousel").style.display = "block";
-});
-
-document.querySelector(".show-carousel").addEventListener("click", () => {
-    document.querySelector(".work-carousel").classList.remove("hidden");
-    document.querySelector(".show-carousel").style.display = "none";
 });
 </script>
 
