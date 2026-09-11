@@ -126,6 +126,13 @@
         transition: all 1s ease;
         transform: none !important;
     }
+    /* ===== ボタンにマウスが重なった時の演出 ===== */
+.ball.to-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
 
     /* はじける演出（クリック時だけ） */
     .ball.pop {
