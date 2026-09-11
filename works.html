@@ -361,7 +361,7 @@ window.addEventListener("DOMContentLoaded", () => {
             /* ★ 修正点：thumbPos を all に引き継ぐ */
             works.all.push({
                 src: w.src,
-                desc: `${w.desc}（${w.code}）`,
+                desc: w.desc,
                 thumbPos: w.thumbPos || "center"
             });
         });
