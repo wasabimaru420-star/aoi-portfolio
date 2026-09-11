@@ -93,25 +93,25 @@
     /* ===== 玉（SNSボタンの化身） ===== */
     .ball {
         position: fixed;
-        width: 110px;
+        width: 110px; /* ★大きさはそのまま */
         height: 110px;
         border-radius: 50%;
         z-index: -1;
         transition: 0.6s ease;
     }
 
-    /* 柔らかい色（赤・青・黄・緑・紫） */
-    .ball:nth-child(1) { background: #ff8a8a; animation: move1 6s infinite ease-in-out; }
-    .ball:nth-child(2) { background: #7ab8ff; animation: move2 7s infinite ease-in-out; }
-    .ball:nth-child(3) { background: #fff08a; animation: move3 5.5s infinite ease-in-out; }
-    .ball:nth-child(4) { background: #8affc1; animation: move4 6.5s infinite ease-in-out; }
-    .ball:nth-child(5) { background: #d08aff; animation: move5 7.5s infinite ease-in-out; }
+    /* 柔らかい赤・青・黄・緑・紫 */
+    .ball:nth-child(1) { background: #ff9a9a; animation: move1 6s infinite ease-in-out; }
+    .ball:nth-child(2) { background: #8ac6ff; animation: move2 7s infinite ease-in-out; }
+    .ball:nth-child(3) { background: #fff59a; animation: move3 5.5s infinite ease-in-out; }
+    .ball:nth-child(4) { background: #9affc6; animation: move4 6.5s infinite ease-in-out; }
+    .ball:nth-child(5) { background: #d59aff; animation: move5 7.5s infinite ease-in-out; }
 
     /* ===== 玉の動き範囲を右側60%に限定 ===== */
     @keyframes move1 {
         0% { transform: translate(0,0); }
-        25% { transform: translate(20vw, 10vh); }
-        50% { transform: translate(10vw, 25vh); }
+        25% { transform: translate(10vw, 10vh); }
+        50% { transform: translate(20vw, 25vh); }
         75% { transform: translate(15vw, -20vh); }
         100% { transform: translate(0,0); }
     }
@@ -146,7 +146,7 @@
         100% { transform: translate(0,0); }
     }
 
-    /* ===== ボタン化（小さめに調整） ===== */
+    /* ===== ボタン化（今のまま） ===== */
     .ball.to-button {
         animation: none;
         z-index: 10;
@@ -197,7 +197,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
 
 </main>
 
-<!-- ===== 玉5つ（SNSボタンの化身） ===== -->
+<!-- ===== 玉5つ（右側60%に配置し直し） ===== -->
 <div class="ball" data-link="https://twitter.com" style="left:45vw; top:20vh;"></div>
 <div class="ball" data-link="https://www.instagram.com" style="left:55vw; top:50vh;"></div>
 <div class="ball" data-link="https://www.pixiv.net" style="left:65vw; top:10vh;"></div>
