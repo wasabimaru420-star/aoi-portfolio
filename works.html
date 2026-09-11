@@ -222,15 +222,7 @@
         transform: scale(1.1);
     }
 
-    #modal-img {
-        pointer-events: none;
-    }
-
-    #img-modal {
-        overflow: hidden;
-    }
-
-    /* ★イラスト150だけ画像を0.8倍にするためのラッパー */
+    /* ★イラスト150だけ画像を0.8倍にするラッパー */
     .thumb-wrapper {
         width: 120px;
         height: 120px;
@@ -242,6 +234,11 @@
 
     .thumb-150 {
         transform: scale(0.8);
+    }
+
+    /* ★hover時の拡大を正しくする（0.8倍 × 1.1倍 = 0.88倍） */
+    .thumb-150:hover {
+        transform: scale(0.8) scale(1.1);
     }
 </style>
 </head>
@@ -323,7 +320,6 @@
         cursor:pointer;
     ">戻る</button>
 </div>
-
 <script>
 window.addEventListener("DOMContentLoaded", () => {
 
