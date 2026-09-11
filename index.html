@@ -61,7 +61,6 @@
         transform: translateY(500px);
     }
 
-    /* 白帯 */
     .image-backdrop {
         position: absolute;
         right: 0;
@@ -73,7 +72,6 @@
         z-index: -1;
     }
 
-    /* 黄色帯 */
     .big-title-box {
         position: absolute;
         left: 0;
@@ -113,7 +111,6 @@
         z-index: 2;
     }
 
-    /* タイトル横の説明文（スライドイン対応済み） */
     .title-text {
         position: absolute;
         left: 120px;
@@ -122,14 +119,11 @@
         font-weight: 600;
         color: #444;
         z-index: 3;
-
-        /* ★スライドイン初期状態 */
         opacity: 0;
         transform: translateY(40px);
         transition: 1s ease;
     }
 
-    /* 白帯右下のもっと見るボタン */
     .info-box {
         position: absolute;
         right: 40px;
@@ -159,7 +153,6 @@
 
     .show-title { opacity: 1; transform: translateY(0); }
 
-    /* イラスト196 */
     .crop-img {
         position: absolute;
         right: 80px;
@@ -175,7 +168,6 @@
         z-index: 2;
     }
 
-    /* WORKS の画像 */
     .normal-img {
         position: absolute;
         right: 80px;
@@ -193,109 +185,116 @@
 
     .show-img { opacity: 1; transform: translateX(0); }
 
-    /* セクション間の距離 */
     section + section {
         margin-top: -200px;
     }
-/* ===== スマホ最適化 ===== */
-@media (max-width: 768px) {
 
-    body {
-        padding-top: 60px;
-        background-size: cover;
-        background-position: center top;
+    /* ===== スマホ最適化 ===== */
+    @media (max-width: 768px) {
+
+        body {
+            padding-top: 60px;
+            background-size: cover;
+            background-position: center top;
+        }
+
+        header {
+            padding: 8px 16px;
+        }
+
+        nav {
+            display: none;
+            flex-direction: column;
+            background: rgba(0,0,0,0.85);
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 200px;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .menu-btn {
+            display: block;
+            font-size: 28px;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            z-index: 2001;
+        }
+
+        section {
+            min-height: auto;
+            padding: 120px 20px 80px;
+            transform: none;
+        }
+
+        .image-backdrop,
+        .big-title-box {
+            display: none;
+        }
+
+        .section-number {
+            position: static;
+            font-size: 32px;
+            margin-bottom: 10px;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .big-title {
+            position: static;
+            font-size: 48px;
+            line-height: 1.1;
+            opacity: 1 !important;
+            transform: none !important;
+            margin-bottom: 20px;
+        }
+
+        .title-text {
+            position: static;
+            font-size: 16px;
+            opacity: 1 !important;
+            transform: none !important;
+            margin-bottom: 20px;
+        }
+
+        .crop-img,
+        .normal-img {
+            position: static;
+            width: 100%;
+            height: auto;
+            max-height: none;
+            margin-top: 20px;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        .info-box {
+            position: static;
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .more-btn {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+
+        section + section {
+            margin-top: 80px;
+        }
     }
 
-    header {
-        padding: 8px 16px;
+    /* ===== PC用メニューボタン設定（追加した部分） ===== */
+    @media (min-width: 769px) {
+        .menu-btn {
+            display: none;
+            position: static;
+        }
     }
-
-    nav {
-        display: none; /* ハンバーガー開くまで非表示 */
-        flex-direction: column;
-        background: rgba(0,0,0,0.85);
-        position: absolute;
-        top: 60px;
-        right: 0;
-        width: 200px;
-        padding: 10px;
-        border-radius: 10px;
-    }
-
-    /* ハンバーガーボタン */
-    .menu-btn {
-        display: block;
-        font-size: 28px;
-        cursor: pointer;
-    }
-
-    /* セクション全体をスマホ用に縦レイアウトへ */
-    section {
-        min-height: auto;
-        padding: 120px 20px 80px;
-        transform: none;
-    }
-
-    .image-backdrop,
-    .big-title-box {
-        display: none; /* スマホでは白帯・黄色帯を非表示 */
-    }
-
-    .section-number {
-        position: static;
-        font-size: 32px;
-        margin-bottom: 10px;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    .big-title {
-        position: static;
-        font-size: 48px;
-        line-height: 1.1;
-        opacity: 1 !important;
-        transform: none !important;
-        margin-bottom: 20px;
-    }
-
-    .title-text {
-        position: static;
-        font-size: 16px;
-        opacity: 1 !important;
-        transform: none !important;
-        margin-bottom: 20px;
-    }
-
-    /* 画像をスマホ中央に */
-    .crop-img,
-    .normal-img {
-        position: static;
-        width: 100%;
-        height: auto;
-        max-height: none;
-        margin-top: 20px;
-        opacity: 1 !important;
-        transform: none !important;
-    }
-
-    /* もっと見るボタン */
-    .info-box {
-        position: static;
-        margin-top: 20px;
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .more-btn {
-        padding: 12px 24px;
-        font-size: 16px;
-    }
-
-    /* セクション間の距離調整 */
-    section + section {
-        margin-top: 80px;
-    }
-}
 
 </style>
 </head>
@@ -316,7 +315,6 @@
 
 <div class="hero"></div>
 
-<!-- 02 ABOUT -->
 <section id="about">
     <div class="image-backdrop"></div>
     <div class="big-title-box"></div>
@@ -333,7 +331,6 @@
     </div>
 </section>
 
-<!-- 03 WORKS -->
 <section id="works">
     <div class="image-backdrop"></div>
     <div class="big-title-box"></div>
@@ -350,7 +347,6 @@
     </div>
 </section>
 
-<!-- 04 COMMISSION -->
 <section id="commission">
     <div class="image-backdrop"></div>
     <div class="big-title-box"></div>
@@ -365,7 +361,6 @@
     </div>
 </section>
 
-<!-- 05 CONTACT -->
 <section id="contact">
     <div class="image-backdrop"></div>
     <div class="big-title-box"></div>
@@ -394,7 +389,6 @@
                 const img = sec.querySelector("img");
                 if (img) img.classList.add("show-img");
 
-                /* ★説明文もスライドイン */
                 const txt = sec.querySelector(".title-text");
                 if (txt) txt.classList.add("show-title");
             }
@@ -406,17 +400,16 @@
                 const img = sec.querySelector("img");
                 if (img) img.classList.remove("show-img");
 
-                /* ★説明文もリセット */
                 const txt = sec.querySelector(".title-text");
                 if (txt) txt.classList.remove("show-title");
             }
         });
     });
-    document.querySelector(".menu-btn").addEventListener("click", () => {
-    const nav = document.querySelector("nav");
-    nav.style.display = nav.style.display === "flex" ? "none" : "flex";
-});
 
+    document.querySelector(".menu-btn").addEventListener("click", () => {
+        const nav = document.querySelector("nav");
+        nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+    });
 </script>
 
 </body>
