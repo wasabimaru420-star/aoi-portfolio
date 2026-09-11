@@ -153,11 +153,14 @@
     .toggle-carousel {
         position: absolute;
         left: 0;
-        top: 50%;
-        transform: translateY(-50%);
+        bottom: 0;
+        width: 40px;        /* 横幅はそのまま（必要なら言って） */
+        height: 180px;      /* ★ シークバーと同じ高さ */
         background: rgba(255,255,255,0.2);
         color: white;
-        padding: 10px 14px;
+        display: flex;      /* ★ 中央配置のため追加 */
+        align-items: center;/* ★ 縦中央 */
+        justify-content: center; /* ★ 横中央 */
         border-radius: 0 8px 8px 0;
         cursor: pointer;
         z-index: 1001;
@@ -174,7 +177,7 @@
         background: rgba(255,255,255,0.2);
         color: white;
         display: flex;
-        lign-items: center;
+        align-items: center;
         justify-content: center;
         border-radius: 8px 0 0 8px;
         cursor: pointer;
