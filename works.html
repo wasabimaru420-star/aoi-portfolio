@@ -103,13 +103,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden; /* ← 枠の見た目を完全固定 */
+        overflow: hidden;
         box-sizing: border-box;
     }
 
-    /* keyvisual の位置調整 */
+    /* keyvisual は元に戻す（位置調整なし） */
     .img-frame.keyvisual-frame {
-        margin-top: -40px;
+        margin-top: 0;
     }
 
     #main-work-img {
@@ -155,7 +155,7 @@
         pointer-events: none;
     }
 
-    /* ★シークバー左端にくっつくボタン */
+    /* ★シークバー隠しボタン（左端） */
     .toggle-carousel {
         position: absolute;
         left: 0;
@@ -170,8 +170,19 @@
         transition: 0.3s;
     }
 
-    .toggle-carousel:hover {
-        background: rgba(255,255,255,0.4);
+    /* ★シークバー再表示ボタン（右メニューバーに接触） */
+    .show-carousel {
+        position: fixed;
+        right: 220px;
+        bottom: 90px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px 0 0 8px;
+        cursor: pointer;
+        z-index: 1001;
+        transition: 0.3s;
+        display: none;
     }
 
     .arrow {
@@ -253,6 +264,8 @@
     <button class="arrow right">→</button>
 </div>
 
+<div class="show-carousel">◀</div>
+
 <script>
 const works = {
     vtuber: [
@@ -283,7 +296,7 @@ const categoryNumber = {
     other: 6
 };
 
-/* 顔位置調整（見切れ防止） */
+/* vtuber の画像位置調整（見切れ防止） */
 const facePosition = {
     "img/イラスト148.webp": "center 12%",
     "img/イラスト150.webp": "center 15%",
@@ -315,13 +328,17 @@ function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
 }
 
+/* keyvisual は元に戻す */
 function updateFrameClass() {
     const frame = document.querySelector(".img-frame");
     frame.className = "img-frame";
 
-    if (currentCategory === "keyvisual") frame.classList.add("keyvisual-frame");
+    if (currentCategory === "keyvisual") {
+        frame.classList.add("keyvisual-frame");
+    }
 }
 
+/* vtuber の画像位置調整 */
 function updateFacePosition(src) {
     if (facePosition[src]) {
         mainImg.style.objectPosition = facePosition[src];
@@ -379,6 +396,19 @@ function updateDisplay() {
 updateDisplay();
 updateCarousel();
 
+/* シークバー隠しボタン */
+document.querySelector(".toggle-carousel").addEventListener("click", () => {
+    document.querySelector(".work-carousel").classList.add("hidden");
+    document.querySelector(".show-carousel").style.display = "block";
+});
+
+/* シークバー再表示ボタン */
+document.querySelector(".show-carousel").addEventListener("click", () => {
+    document.querySelector(".work-carousel").classList.remove("hidden");
+    document.querySelector(".show-carousel").style.display = "none";
+});
+
+/* 左右ボタン */
 document.querySelector(".arrow.left").addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
     updateDisplay();
@@ -387,11 +417,6 @@ document.querySelector(".arrow.left").addEventListener("click", () => {
 document.querySelector(".arrow.right").addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % works[currentCategory].length;
     updateDisplay();
-});
-
-/* シークバー隠しボタン */
-document.querySelector(".toggle-carousel").addEventListener("click", () => {
-    document.querySelector(".work-carousel").classList.toggle("hidden");
 });
 </script>
 
