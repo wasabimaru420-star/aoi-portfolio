@@ -163,6 +163,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
 
 <script>
     const balls = document.querySelectorAll(".ball");
+    let animationId = null;
     let timeout;
 
     /* ===== 反射アニメーション設定 ===== */
@@ -178,9 +179,9 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
         let x = leftLimit + Math.random() * (rightLimit - leftLimit - 110);
         let y = Math.random() * (bottomLimit - 110);
 
-        // ランダム速度
-        let vx = (Math.random() * 4 + 2) * (Math.random() < 0.5 ? -1 : 1);
-        let vy = (Math.random() * 4 + 2) * (Math.random() < 0.5 ? -1 : 1);
+        // ランダム速度（端まで届く強さ）
+        let vx = (Math.random() * 6 + 4) * (Math.random() < 0.5 ? -1 : 1);
+        let vy = (Math.random() * 6 + 4) * (Math.random() < 0.5 ? -1 : 1);
 
         speeds.push({ x, y, vx, vy });
 
@@ -223,7 +224,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
             ball.style.top = s.y + "px";
         });
 
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
     }
 
     animate();
@@ -240,6 +241,8 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     /* ===== クリックでボタン化 ===== */
     document.addEventListener("click", (e) => {
         if (e.target.closest("header") || e.target.closest(".about-img")) return;
+
+        cancelAnimationFrame(animationId); // ★動きを完全停止
 
         balls.forEach((ball, i) => {
             ball.classList.add("to-button");
@@ -258,6 +261,8 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
                 ball.classList.remove("to-button");
                 ball.textContent = "";
             });
+
+            animate(); // ★反射アニメーション再開
         }, 5000);
     });
 </script>
