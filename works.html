@@ -170,13 +170,13 @@
     /* 表示ボタン（右メニューバーに接触） */
     .show-carousel {
         position: fixed;
-        right: 220px;        /* メニューバーに接触 */
-        bottom: 0;           /* シークバーと同じ位置に揃える */
-        width: 40px;         /* 横幅はそのまま（必要なら調整可能） */
-        height: 180px;       /* ★ シークバーと同じ高さにする */
+        right: 220px;       /* メニューバーに接触 */
+        bottom: 0;          /* シークバーと同じ位置 */
+        width: 40px;        /* 横幅はそのまま */
+        height: 180px;      /* ★ シークバーと同じ高さ */
         background: rgba(255,255,255,0.2);
         color: white;
-        display: flex;
+        display: flex;      /* ★ 中央配置 */
         align-items: center;
         justify-content: center;
         border-radius: 8px 0 0 8px;
@@ -265,6 +265,7 @@
     <button class="arrow right">→</button>
 </div>
 
+<div class="toggle-carousel">▶</div>
 <div class="show-carousel">◀</div>
 
 <script>
