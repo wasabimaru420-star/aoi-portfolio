@@ -199,6 +199,13 @@
     }
 /* ===== スマホ最適化 ===== */
 @media (max-width: 768px) {
+    .menu-btn {
+        position: static;   /* PC では通常の位置に戻す */
+        margin-left: 20px;  /* ロゴの横に余白をつける */
+        font-size: 24px;
+        display: none;      /* PC では非表示にする */
+    }
+}
 
     body {
         padding-top: 60px;
