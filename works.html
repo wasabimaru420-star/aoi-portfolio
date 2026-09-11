@@ -96,27 +96,17 @@
         gap: 40px;
     }
 
-    /* ★ 枠は通常カテゴリのみ。vtuber は枠を消す */
+    /* ★元の枠に戻す（常に固定） */
     .img-frame {
+        width: 700px;
+        height: 900px;
         display: flex;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
     }
 
-    /* keyvisual は枠あり（元に戻す） */
-    .img-frame.keyvisual-frame {
-        width: 700px;
-        height: 900px;
-    }
-
-    /* vtuber は枠なし（縮小倍率維持） */
-    .img-frame.vtuber-frame {
-        width: auto;
-        height: auto;
-    }
-
-    /* 画像は縮小倍率を維持したまま表示 */
+    /* ★画像の縮小倍率も元に戻す */
     #main-work-img {
         width: auto;
         height: auto;
@@ -254,7 +244,7 @@
     </aside>
 
     <main class="work-display">
-        <div class="img-frame vtuber-frame">
+        <div class="img-frame">
             <img id="main-work-img" src="img/イラスト148.webp">
         </div>
         <div class="work-description">VTuber作品：イラスト148</div>
@@ -326,17 +316,10 @@ function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
 }
 
-/* 枠切り替え */
+/* 枠は常に固定に戻す */
 function updateFrameClass() {
     const frame = document.querySelector(".img-frame");
-
     frame.className = "img-frame";
-
-    if (currentCategory === "vtuber") {
-        frame.classList.add("vtuber-frame");
-    } else if (currentCategory === "keyvisual") {
-        frame.classList.add("keyvisual-frame");
-    }
 }
 
 document.querySelectorAll(".category").forEach(cat => {
