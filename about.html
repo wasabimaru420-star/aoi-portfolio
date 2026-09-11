@@ -93,65 +93,66 @@
     /* ===== 玉（SNSボタンの化身） ===== */
     .ball {
         position: fixed;
-        width: 70px;
-        height: 70px;
+        width: 110px;
+        height: 110px;
         border-radius: 50%;
         z-index: -1;
         transition: 0.6s ease;
     }
 
-    /* カラフルな色 + 個別アニメーション */
-    .ball:nth-child(1) { background: #ff6b6b; animation: move1 6s infinite ease-in-out; }
-    .ball:nth-child(2) { background: #4ecdc4; animation: move2 7s infinite ease-in-out; }
-    .ball:nth-child(3) { background: #ffe66d; animation: move3 5.5s infinite ease-in-out; }
-    .ball:nth-child(4) { background: #a29bfe; animation: move4 6.5s infinite ease-in-out; }
-    .ball:nth-child(5) { background: #ff9ff3; animation: move5 7.5s infinite ease-in-out; }
+    /* 柔らかい色（赤・青・黄・緑・紫） */
+    .ball:nth-child(1) { background: #ff8a8a; animation: move1 6s infinite ease-in-out; }
+    .ball:nth-child(2) { background: #7ab8ff; animation: move2 7s infinite ease-in-out; }
+    .ball:nth-child(3) { background: #fff08a; animation: move3 5.5s infinite ease-in-out; }
+    .ball:nth-child(4) { background: #8affc1; animation: move4 6.5s infinite ease-in-out; }
+    .ball:nth-child(5) { background: #d08aff; animation: move5 7.5s infinite ease-in-out; }
 
+    /* ===== 玉の動き範囲を右側60%に限定 ===== */
     @keyframes move1 {
         0% { transform: translate(0,0); }
         25% { transform: translate(20vw, 10vh); }
-        50% { transform: translate(-15vw, 25vh); }
-        75% { transform: translate(10vw, -20vh); }
+        50% { transform: translate(10vw, 25vh); }
+        75% { transform: translate(15vw, -20vh); }
         100% { transform: translate(0,0); }
     }
 
     @keyframes move2 {
         0% { transform: translate(0,0); }
-        30% { transform: translate(-10vw, 30vh); }
+        30% { transform: translate(15vw, 30vh); }
         60% { transform: translate(25vw, -15vh); }
         100% { transform: translate(0,0); }
     }
 
     @keyframes move3 {
         0% { transform: translate(0,0); }
-        20% { transform: translate(15vw, -10vh); }
-        50% { transform: translate(-20vw, 20vh); }
-        80% { transform: translate(10vw, 30vh); }
+        20% { transform: translate(10vw, -10vh); }
+        50% { transform: translate(20vw, 20vh); }
+        80% { transform: translate(15vw, 30vh); }
         100% { transform: translate(0,0); }
     }
 
     @keyframes move4 {
         0% { transform: translate(0,0); }
-        25% { transform: translate(-25vw, 15vh); }
+        25% { transform: translate(25vw, 15vh); }
         55% { transform: translate(20vw, 25vh); }
-        85% { transform: translate(-10vw, -20vh); }
+        85% { transform: translate(10vw, -20vh); }
         100% { transform: translate(0,0); }
     }
 
     @keyframes move5 {
         0% { transform: translate(0,0); }
         35% { transform: translate(30vw, 20vh); }
-        65% { transform: translate(-15vw, -25vh); }
+        65% { transform: translate(15vw, -25vh); }
         100% { transform: translate(0,0); }
     }
 
-    /* ボタン化 */
+    /* ===== ボタン化（小さめに調整） ===== */
     .ball.to-button {
         animation: none;
         z-index: 10;
         background: rgba(255,255,255,0.9);
-        width: 180px;
-        height: 55px;
+        width: 120px;
+        height: 45px;
         border-radius: 10px;
         color: black;
         font-weight: bold;
@@ -197,11 +198,11 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
 </main>
 
 <!-- ===== 玉5つ（SNSボタンの化身） ===== -->
-<div class="ball" data-link="https://twitter.com" style="left:10vw; top:20vh;"></div>
-<div class="ball" data-link="https://www.instagram.com" style="left:30vw; top:50vh;"></div>
-<div class="ball" data-link="https://www.pixiv.net" style="left:50vw; top:10vh;"></div>
-<div class="ball" data-link="https://github.com" style="left:70vw; top:40vh;"></div>
-<div class="ball" data-link="https://skeb.jp" style="left:20vw; top:70vh;"></div>
+<div class="ball" data-link="https://twitter.com" style="left:45vw; top:20vh;"></div>
+<div class="ball" data-link="https://www.instagram.com" style="left:55vw; top:50vh;"></div>
+<div class="ball" data-link="https://www.pixiv.net" style="left:65vw; top:10vh;"></div>
+<div class="ball" data-link="https://github.com" style="left:75vw; top:40vh;"></div>
+<div class="ball" data-link="https://skeb.jp" style="left:85vw; top:70vh;"></div>
 
 <script>
     const balls = document.querySelectorAll(".ball");
@@ -209,11 +210,11 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
 
     /* ★ ABOUT・説明文の下に横並びだった元のSNSボタン位置 */
     const positions = [
-        { left: "45vw", top: "70vh", label: "X" },
-        { left: "55vw", top: "70vh", label: "Instagram" },
-        { left: "65vw", top: "70vh", label: "Pixiv" },
-        { left: "75vw", top: "70vh", label: "GitHub" },
-        { left: "85vw", top: "70vh", label: "Skeb" }
+        { left: "45vw", top: "75vh", label: "X" },
+        { left: "55vw", top: "75vh", label: "Instagram" },
+        { left: "65vw", top: "75vh", label: "Pixiv" },
+        { left: "75vw", top: "75vh", label: "GitHub" },
+        { left: "85vw", top: "75vh", label: "Skeb" }
     ];
 
     document.addEventListener("click", (e) => {
