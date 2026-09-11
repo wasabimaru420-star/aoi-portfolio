@@ -78,16 +78,19 @@
     }
 
     /* ===== 右側テキスト ===== */
-    .right-text {
-        padding: 40px;
-        margin-left: 40%; /* ★ 左画像の幅を避ける */
-        height: calc(100vh - 70px);
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 20px;
-    }
+   .right-text {
+    position: absolute;
+    left: 40%;            /* ★ 左画像の幅ぶん右にずらす */
+    top: 70px;            /* ★ ヘッダーの下に配置 */
+    width: 60%;           /* ★ 右側の領域を確保 */
+    height: calc(100vh - 70px);
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
 
     .about-title {
         font-size: 48px;
