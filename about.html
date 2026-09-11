@@ -288,11 +288,18 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
         clearTimeout(timeout);
         timeout = setTimeout(() => {
             balls.forEach(ball => {
-                ball.classList.remove("to-button");
-                ball.textContent = "";
+                /* ★ ボタン → 玉に戻るときの演出 */
+        ball.classList.add("unpop");
+
+        setTimeout(() => {
+            ball.classList.remove("to-button");
+            ball.classList.remove("unpop");
+            ball.textContent = "";
+        }, 250); // 演出が終わるタイミング
+                
             });
 
-            animate();
+            animate();// ★ 元の反射アニメーションに復帰
         }, 5000);
     });
 </script>
