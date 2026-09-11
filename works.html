@@ -228,11 +228,6 @@
     #img-modal {
         overflow: hidden;
     }
-
-    /* ★追加：イラスト150だけサイズを小さくする */
-    #main-work-img[src="img/イラスト150.webp"] {
-        max-height: 60vh;
-    }
 </style>
 </head>
 
@@ -316,12 +311,11 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
-
     const works = {
         vtuber: [
-            { src: "img/イラスト196.webp", desc: "「葵山葵。」\n自身の代理キャラクターとして生み出した存在であり、個人的な理想と現実を融合させた体。", position: "center top" },   /* ★追加 */
-            { src: "img/イラスト148.webp", desc: "「風龍（かざり）」\n十二支をモチーフとしてVtuberを作り出す企画の最初の一人。\n辰×風神がモチーフとなっており、雷蛇とは対となる存在。", position: "center 20%" }, /* ★追加 */
-            { src: "img/イラスト150.webp", desc: "「雷蛇（かんだ）」\n十二支をモチーフとしてVtuberを作り出す企画の二人目。\n蛇×雷神がモチーフとなっており、風龍とは対となる存在。", position: "center 30%" } /* ★追加 */
+            { src: "img/イラスト196.webp", desc: "「葵山葵。」\n自身の代理キャラクターとして生み出した存在であり、個人的な理想と現実を融合させた体。" },
+            { src: "img/イラスト148.webp", desc: "「風龍（かざり）」\n十二支をモチーフとしてVtuberを作り出す企画の最初の一人。\n辰×風神がモチーフとなっており、雷蛇とは対となる存在。" },
+            { src: "img/イラスト150.webp", desc: "「雷蛇（かんだ）」\n十二支をモチーフとしてVtuberを作り出す企画の二人目。\n蛇×雷神がモチーフとなっており、風龍とは対となる存在。" }
         ],
 
         keyvisual: [
@@ -419,9 +413,6 @@ window.addEventListener("DOMContentLoaded", () => {
         } else {
             mainImg.classList.remove("keyvisual-img");
         }
-
-        /* ★追加：作品ごとの object-position を反映 */
-        mainImg.style.objectPosition = w.position || "center";
 
         mainImg.style.width = "auto";
         mainImg.style.height = "auto";
