@@ -88,20 +88,30 @@
         opacity: 1;
     }
 
-    /* ★画像枠だけ広げた（画像サイズは一切変更なし） */
     .work-display {
         padding: 40px;
         display: grid;
-        grid-template-columns: 700px 1fr; /* ← 枠を広げた */
+        grid-template-columns: 55% 45%;
         align-items: center;
         gap: 40px;
     }
 
-    /* ★画像の大きさは今のまま（触らない） */
+    /* ★画像の「枠」を統一する */
+    .img-frame {
+        width: 700px;      /* 枠の横幅を統一 */
+        height: 900px;     /* 枠の縦幅を統一 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    /* ★画像自体の大きさは今のまま（触らない） */
     #main-work-img {
         width: auto;
         height: auto;
-        max-height: 100vh;
+        max-height: 100%;
+        max-width: 100%;
         object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
@@ -197,7 +207,10 @@
     </aside>
 
     <main class="work-display">
-        <img id="main-work-img" src="img/イラスト148.webp">
+        <!-- ★画像を枠で囲む -->
+        <div class="img-frame">
+            <img id="main-work-img" src="img/イラスト148.webp">
+        </div>
         <div class="work-description">VTuber作品：イラスト148</div>
     </main>
 
@@ -280,7 +293,7 @@ function updateDisplay() {
 
     updateBackground(w.src);
 
-    /* 画像サイズは一切触らない */
+    /* 画像のサイズは一切いじらない */
     mainImg.style.width = "auto";
     mainImg.style.height = "auto";
     mainImg.style.objectFit = "contain";
