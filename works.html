@@ -114,7 +114,6 @@
         border-radius: 10px;
     }
 
-    /* ★ キービジュアルだけ縦位置を少し上へ移動 */
     .keyvisual-img {
         object-position: 50% 10%;
     }
@@ -219,6 +218,16 @@
 
     .thumb:hover {
         transform: scale(1.1);
+    }
+
+    /* ★ モーダル画像のイベントを無効化（戻るボタン・ズーム・ドラッグを有効にする） */
+    #modal-img {
+        pointer-events: none;
+    }
+
+    /* ★ モーダル内のスクロール挙動を安定させる */
+    #img-modal {
+        overflow: hidden;
     }
 </style>
 </head>
@@ -366,7 +375,6 @@ function updateDisplay() {
     updateBackground(w.src);
     updateFrameClass();
 
-    /* ★ キービジュアルだけ縦位置を少し上へ移動 */
     if (currentCategory === "keyvisual") {
         mainImg.classList.add("keyvisual-img");
     } else {
@@ -418,7 +426,7 @@ document.getElementById("img-modal").addEventListener("click", () => {
     document.getElementById("img-modal").style.display = "none";
 });
 
-    /* ★ モーダル内の画像操作（ズーム＋ドラッグ） */
+/* ★ モーダル内の画像操作（ズーム＋ドラッグ） */
 const modal = document.getElementById("img-modal");
 const modalImg = document.getElementById("modal-img");
 const closeBtn = document.getElementById("modal-close-btn");
@@ -435,11 +443,11 @@ modal.addEventListener("wheel", (e) => {
     e.preventDefault();
     scale += e.deltaY * -0.001;
     scale = Math.min(Math.max(0.5, scale), 5);
-    modalImg.style.transform = `scale(${scale}) translate(${imgX}px, ${imgY}px)`;
+    modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
 });
 
 /* ドラッグ開始（長押し） */
-modalImg.addEventListener("mousedown", (e) => {
+modal.addEventListener("mousedown", (e) => {
     isDragging = true;
     startX = e.clientX;
     startY = e.clientY;
@@ -452,7 +460,7 @@ modal.addEventListener("mousemove", (e) => {
     imgY += (e.clientY - startY) * 0.5;
     startX = e.clientX;
     startY = e.clientY;
-    modalImg.style.transform = `scale(${scale}) translate(${imgX}px, ${imgY}px)`;
+    modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
 });
 
 /* ドラッグ終了 */
@@ -468,9 +476,8 @@ closeBtn.addEventListener("click", () => {
     imgY = 0;
     modalImg.style.transform = "none";
 });
-    
 </script>
-    
+
 <!-- ★ 画像拡大表示モーダル -->
 <div id="img-modal" style="
     display:none;
