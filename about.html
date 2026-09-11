@@ -9,12 +9,13 @@
     body {
         margin: 0;
         padding-top: 70px; /* ★ Home と完全一致 */
-        background: #0a0a0a url('img/イラスト25.webp') top center / cover no-repeat;
+        background: #0a0a0a;
         color: white;
         font-family: "Noto Sans JP", sans-serif;
-        overflow-x: hidden; /* ★ Home と同じ */
+        overflow: hidden; /* ★ スクロールなし */
     }
 
+    /* ===== ヘッダー（Home と完全一致） ===== */
     header {
         position: fixed;
         top: 0;
@@ -49,35 +50,43 @@
         border-radius: 4px;
     }
 
-    /* ===== About レイアウト ===== */
-    .about-wrapper {
+    /* ===== レイアウト ===== */
+    .about-layout {
         display: grid;
         grid-template-columns: 40% 60%;
         height: calc(100vh - 70px); /* ★ 画面ぴったり */
-        box-sizing: border-box;
     }
 
+    /* ===== 左側：イラスト25を縦ぴったりで配置 ===== */
     .left-img-frame {
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 100%;
+        box-sizing: border-box;
         padding-left: 20px;
     }
 
     .about-img {
-        height: 100%;       /* ★ イラスト25が完全に入る */
+        height: 100vh;   /* ★ 画面の上下にぴったり合わせる */
         width: auto;
         object-fit: contain;
-        border-radius: 10px;
+        position: fixed; /* ★ 左端に固定 */
+        left: 0;
+        top: 0;
+        border-radius: 0;
     }
 
+    /* ===== 右側テキスト ===== */
     .right-text {
         padding: 40px;
+        margin-left: 40%; /* ★ 左画像の幅を避ける */
+        height: calc(100vh - 70px);
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         justify-content: center;
         gap: 20px;
-        box-sizing: border-box;
     }
 
     .about-title {
@@ -126,11 +135,9 @@
     </nav>
 </header>
 
-<main class="about-wrapper">
+<main class="about-layout">
 
-    <div class="left-img-frame">
-        <img src="img/イラスト25.webp" class="about-img">
-    </div>
+    <img src="img/イラスト25.webp" class="about-img">
 
     <div class="right-text">
         <h1 class="about-title">ABOUT</h1>
