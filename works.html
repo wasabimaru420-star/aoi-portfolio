@@ -96,23 +96,18 @@
         gap: 40px;
     }
 
-    /* ★画像枠（カテゴリごとに調整可能） */
+    /* ★画像枠（完全固定） */
     .img-frame {
         width: 700px;
         height: 900px;
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden; /* ← 枠の見た目を完全固定 */
         box-sizing: border-box;
     }
 
-    /* vtuber専用枠（同じサイズで統一） */
-    .img-frame.vtuber-frame {
-        width: 700px;
-        height: 900px;
-    }
-
-    /* keyvisual の位置を少し上げる */
+    /* keyvisual の位置調整 */
     .img-frame.keyvisual-frame {
         margin-top: -40px;
     }
@@ -120,8 +115,8 @@
     #main-work-img {
         width: auto;
         height: auto;
-        max-height: 100%;
-        max-width: 100%;
+        max-height: none;
+        max-width: none;
         object-fit: contain;
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255,255,255,0.15);
@@ -160,14 +155,16 @@
         pointer-events: none;
     }
 
+    /* ★シークバー左端にくっつくボタン */
     .toggle-carousel {
-        position: fixed;
-        right: 240px;
-        bottom: 200px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
         background: rgba(255,255,255,0.2);
         color: white;
         padding: 10px 14px;
-        border-radius: 8px;
+        border-radius: 0 8px 8px 0;
         cursor: pointer;
         z-index: 1001;
         transition: 0.3s;
@@ -249,9 +246,8 @@
 
 </div>
 
-<div class="toggle-carousel">▶</div>
-
 <div class="work-carousel">
+    <div class="toggle-carousel">▶</div>
     <button class="arrow left">←</button>
     <div class="carousel-track"></div>
     <button class="arrow right">→</button>
@@ -287,11 +283,11 @@ const categoryNumber = {
     other: 6
 };
 
-/* 顔位置調整 */
+/* 顔位置調整（見切れ防止） */
 const facePosition = {
-    "img/イラスト148.webp": "center top",
-    "img/イラスト150.webp": "center top",
-    "img/イラスト196.webp": "center top"
+    "img/イラスト148.webp": "center 12%",
+    "img/イラスト150.webp": "center 15%",
+    "img/イラスト196.webp": "center 10%"
 };
 
 /* all を自動生成 */
@@ -323,7 +319,6 @@ function updateFrameClass() {
     const frame = document.querySelector(".img-frame");
     frame.className = "img-frame";
 
-    if (currentCategory === "vtuber") frame.classList.add("vtuber-frame");
     if (currentCategory === "keyvisual") frame.classList.add("keyvisual-frame");
 }
 
