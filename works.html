@@ -114,6 +114,11 @@
         border-radius: 10px;
     }
 
+    /* ★ キービジュアルだけ縦位置を少し上へ移動 */
+    .keyvisual-img {
+        object-position: 50% 10%;
+    }
+
     .work-description {
         width: 100%;
         height: 100%;
@@ -147,7 +152,6 @@
         pointer-events: none;
     }
 
-    /* 隠すボタン（左端） */
     .toggle-carousel {
         position: absolute;
         left: 0;
@@ -165,7 +169,6 @@
         transition: 0.3s;
     }
 
-    /* 表示ボタン（右メニューバーに接触） */
     .show-carousel {
         position: fixed;
         right: 220px;
@@ -362,6 +365,13 @@ function updateDisplay() {
 
     updateBackground(w.src);
     updateFrameClass();
+
+    /* ★ キービジュアルだけ縦位置を少し上へ移動 */
+    if (currentCategory === "keyvisual") {
+        mainImg.classList.add("keyvisual-img");
+    } else {
+        mainImg.classList.remove("keyvisual-img");
+    }
 
     mainImg.style.width = "auto";
     mainImg.style.height = "auto";
