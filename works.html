@@ -206,7 +206,7 @@
         gap: 20px;
         overflow: hidden;
         width: 60%;
-        align-items: flex-end; /* ★下端を揃える */
+        align-items: flex-end;
     }
 
     .thumb {
@@ -230,11 +230,18 @@
         overflow: hidden;
     }
 
-    /* ★イラスト150の枠を120pxに統一しつつ、見た目だけ小さくする */
-    .thumb[src="img/イラスト150.webp"] {
+    /* ★イラスト150だけ画像を0.8倍にするためのラッパー */
+    .thumb-wrapper {
         width: 120px;
         height: 120px;
-        object-fit: cover;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .thumb-150 {
+        transform: scale(0.8);
     }
 </style>
 </head>
@@ -326,7 +333,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
             { src: "img/イラスト148.webp", desc: "「風龍（かざり）」\n十二支をモチーフとしてVtuberを作り出す企画の最初の一人。\n辰×風神がモチーフとなっており、雷蛇とは対となる存在。", thumbPos: "center 10%" },
 
-            /* ★イラスト150 → 顔が映る＋上下が揃う */
             { 
                 src: "img/イラスト150.webp",
                 desc: "「雷蛇（かんだ）」\n十二支をモチーフとしてVtuberを作り出す企画の二人目。\n蛇×雷神がモチーフとなっており、風龍とは対となる存在。",
@@ -405,17 +411,38 @@ window.addEventListener("DOMContentLoaded", () => {
     function updateCarousel() {
         track.innerHTML = "";
         works[currentCategory].forEach((w, i) => {
-            const img = document.createElement("img");
-            img.src = w.src;
-            img.className = "thumb";
 
-            img.style.objectPosition = w.thumbPos || "center";
+            /* ★イラスト150だけラッパーを使う */
+            if (w.src === "img/イラスト150.webp") {
+                const wrapper = document.createElement("div");
+                wrapper.className = "thumb-wrapper";
 
-            img.addEventListener("click", () => {
-                currentIndex = i;
-                updateDisplay();
-            });
-            track.appendChild(img);
+                const img = document.createElement("img");
+                img.src = w.src;
+                img.className = "thumb thumb-150";
+                img.style.objectPosition = w.thumbPos || "center";
+
+                img.addEventListener("click", () => {
+                    currentIndex = i;
+                    updateDisplay();
+                });
+
+                wrapper.appendChild(img);
+                track.appendChild(wrapper);
+
+            } else {
+                const img = document.createElement("img");
+                img.src = w.src;
+                img.className = "thumb";
+                img.style.objectPosition = w.thumbPos || "center";
+
+                img.addEventListener("click", () => {
+                    currentIndex = i;
+                    updateDisplay();
+                });
+
+                track.appendChild(img);
+            }
         });
     }
 
