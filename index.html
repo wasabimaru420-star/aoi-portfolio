@@ -197,6 +197,105 @@
     section + section {
         margin-top: -200px;
     }
+/* ===== スマホ最適化 ===== */
+@media (max-width: 768px) {
+
+    body {
+        padding-top: 60px;
+        background-size: cover;
+        background-position: center top;
+    }
+
+    header {
+        padding: 8px 16px;
+    }
+
+    nav {
+        display: none; /* ハンバーガー開くまで非表示 */
+        flex-direction: column;
+        background: rgba(0,0,0,0.85);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    /* ハンバーガーボタン */
+    .menu-btn {
+        display: block;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+    /* セクション全体をスマホ用に縦レイアウトへ */
+    section {
+        min-height: auto;
+        padding: 120px 20px 80px;
+        transform: none;
+    }
+
+    .image-backdrop,
+    .big-title-box {
+        display: none; /* スマホでは白帯・黄色帯を非表示 */
+    }
+
+    .section-number {
+        position: static;
+        font-size: 32px;
+        margin-bottom: 10px;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .big-title {
+        position: static;
+        font-size: 48px;
+        line-height: 1.1;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-bottom: 20px;
+    }
+
+    .title-text {
+        position: static;
+        font-size: 16px;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-bottom: 20px;
+    }
+
+    /* 画像をスマホ中央に */
+    .crop-img,
+    .normal-img {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        margin-top: 20px;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* もっと見るボタン */
+    .info-box {
+        position: static;
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .more-btn {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+
+    /* セクション間の距離調整 */
+    section + section {
+        margin-top: 80px;
+    }
+}
 
 </style>
 </head>
@@ -205,6 +304,7 @@
 
 <header>
     <div>Aoi Portfolio</div>
+    <div class="menu-btn">☰</div>
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -312,6 +412,11 @@
             }
         });
     });
+    document.querySelector(".menu-btn").addEventListener("click", () => {
+    const nav = document.querySelector("nav");
+    nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+});
+
 </script>
 
 </body>
