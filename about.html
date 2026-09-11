@@ -14,11 +14,11 @@
         overflow: hidden; /* スクロールなし */
     }
 
+    /* ★ works.html と完全一致したヘッダー */
     header {
         position: fixed;
         top: 0;
         width: 100%;
-        height: 70px;
         padding: 10px 20px;
         box-sizing: border-box;
         display: flex;
@@ -27,6 +27,7 @@
         background: rgba(0,0,0,0.5);
         backdrop-filter: blur(10px);
         z-index: 1000;
+        height: 70px;
     }
 
     nav {
@@ -61,6 +62,7 @@
         z-index: -1;
     }
 
+    /* ★ works.html と同じ grid レイアウト思想で安定化 */
     .about-layout {
         position: fixed;
         top: 70px; /* ヘッダー分ずらす */
@@ -68,25 +70,27 @@
         width: 100%;
         height: calc(100vh - 70px);
         display: grid;
-        grid-template-columns: 38% 62%; /* 左画像・右テキストの比率 */
+        grid-template-columns: 40% 60%;
     }
 
+    /* ★ 画像が完全に入るように余計な padding を削除 */
     .left-img-frame {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
-        padding-left: 20px;
         box-sizing: border-box;
     }
 
+    /* ★ イラスト25が100%確実に収まる設定 */
     .about-img {
-        height: 100%; /* ★縦ぴったりで完全に入る */
+        height: 100%;
         width: auto;
         object-fit: contain;
         border-radius: 10px;
     }
 
+    /* ★ テキストが見えるように高さを正しく確保 */
     .right-text {
         padding: 40px;
         box-sizing: border-box;
@@ -94,7 +98,7 @@
         flex-direction: column;
         justify-content: center;
         gap: 20px;
-        overflow: hidden; /* はみ出し防止 */
+        overflow: visible; /* ★ 非表示にならないように変更 */
     }
 
     .about-title {
