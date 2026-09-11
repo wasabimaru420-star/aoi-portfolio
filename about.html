@@ -8,14 +8,13 @@
 <style>
     body {
         margin: 0;
-        padding-top: 70px; /* ★ Home と完全一致 */
+        padding-top: 70px;
         background: #0a0a0a;
         color: white;
         font-family: "Noto Sans JP", sans-serif;
-        overflow: hidden; /* ★ スクロールなし */
+        overflow: hidden;
     }
 
-    /* ===== ヘッダー（Home と完全一致） ===== */
     header {
         position: fixed;
         top: 0;
@@ -50,47 +49,35 @@
         border-radius: 4px;
     }
 
-    /* ===== レイアウト ===== */
     .about-layout {
         display: grid;
         grid-template-columns: 40% 60%;
-        height: calc(100vh - 70px); /* ★ 画面ぴったり */
-    }
-
-    /* ===== 左側：イラスト25を縦ぴったりで配置 ===== */
-    .left-img-frame {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        box-sizing: border-box;
-        padding-left: 20px;
+        height: calc(100vh - 70px);
     }
 
     .about-img {
-        height: 100vh;   /* ★ 画面の上下にぴったり合わせる */
+        height: 100vh;
         width: auto;
         object-fit: contain;
-        position: fixed; /* ★ 左端に固定 */
+        position: fixed;
         left: 0;
         top: 0;
         border-radius: 0;
     }
 
-    /* ===== 右側テキスト ===== */
-   .right-text {
-    position: absolute;
-    left: 40%;            /* ★ 左画像の幅ぶん右にずらす */
-    top: 70px;            /* ★ ヘッダーの下に配置 */
-    width: 60%;           /* ★ 右側の領域を確保 */
-    height: calc(100vh - 70px);
-    padding: 40px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-}
+    .right-text {
+        position: absolute;
+        left: 40%;
+        top: 70px;
+        width: 60%;
+        height: calc(100vh - 70px);
+        padding: 40px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+    }
 
     .about-title {
         font-size: 48px;
@@ -121,6 +108,42 @@
     .sns-links a:hover {
         background: white;
         color: black;
+    }
+
+    /* ===== 背景で跳ね回る玉 ===== */
+    .ball {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        z-index: -1;
+        animation: bounce 6s infinite ease-in-out;
+        transition: 0.5s ease;
+    }
+
+    @keyframes bounce {
+        0%   { transform: translate(0, 0); }
+        25%  { transform: translate(20vw, 30vh); }
+        50%  { transform: translate(40vw, -10vh); }
+        75%  { transform: translate(10vw, 40vh); }
+        100% { transform: translate(0, 0); }
+    }
+
+    /* ボタン化 */
+    .ball.to-button {
+        animation: none;
+        z-index: 10;
+        background: rgba(255,255,255,0.9);
+        width: 160px;
+        height: 50px;
+        border-radius: 8px;
+        color: black;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
     }
 </style>
 </head>
@@ -165,6 +188,47 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     </div>
 
 </main>
+
+<!-- ===== 玉5つ（SNSボタンの化身） ===== -->
+<div class="ball" data-link="https://twitter.com" style="left:10vw; top:20vh;">X</div>
+<div class="ball" data-link="https://www.instagram.com" style="left:30vw; top:50vh;">Instagram</div>
+<div class="ball" data-link="https://www.pixiv.net" style="left:50vw; top:10vh;">Pixiv</div>
+<div class="ball" data-link="https://github.com" style="left:70vw; top:40vh;">GitHub</div>
+<div class="ball" data-link="https://skeb.jp" style="left:20vw; top:70vh;">Skeb</div>
+
+<script>
+    const balls = document.querySelectorAll(".ball");
+    let timeout;
+
+    const positions = [
+        { left: "45vw", top: "30vh" },
+        { left: "45vw", top: "40vh" },
+        { left: "45vw", top: "50vh" },
+        { left: "45vw", top: "60vh" },
+        { left: "45vw", top: "70vh" }
+    ];
+
+    document.addEventListener("click", (e) => {
+        if (e.target.closest("header") || e.target.closest(".about-img")) return;
+
+        balls.forEach((ball, i) => {
+            ball.classList.add("to-button");
+            ball.style.left = positions[i].left;
+            ball.style.top = positions[i].top;
+
+            ball.onclick = () => {
+                window.open(ball.dataset.link, "_blank");
+            };
+        });
+
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            balls.forEach(ball => {
+                ball.classList.remove("to-button");
+            });
+        }, 5000);
+    });
+</script>
 
 </body>
 </html>
