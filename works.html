@@ -96,7 +96,6 @@
         gap: 40px;
     }
 
-    /* ★元の枠に戻す（常に固定） */
     .img-frame {
         width: 700px;
         height: 900px;
@@ -106,7 +105,6 @@
         box-sizing: border-box;
     }
 
-    /* ★画像の縮小倍率も元に戻す */
     #main-work-img {
         width: auto;
         height: auto;
@@ -154,13 +152,13 @@
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 40px;        /* 横幅はそのまま（必要なら言って） */
-        height: 180px;      /* ★ シークバーと同じ高さ */
+        width: 40px;
+        height: 180px;
         background: rgba(255,255,255,0.2);
         color: white;
-        display: flex;      /* ★ 中央配置のため追加 */
-        align-items: center;/* ★ 縦中央 */
-        justify-content: center; /* ★ 横中央 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 0 8px 8px 0;
         cursor: pointer;
         z-index: 1001;
@@ -170,13 +168,13 @@
     /* 表示ボタン（右メニューバーに接触） */
     .show-carousel {
         position: fixed;
-        right: 220px;       /* メニューバーに接触 */
-        bottom: 0;          /* シークバーと同じ位置 */
-        width: 40px;        /* 横幅はそのまま */
-        height: 180px;      /* ★ シークバーと同じ高さ */
+        right: 220px;
+        bottom: 0;
+        width: 40px;
+        height: 180px;
         background: rgba(255,255,255,0.2);
         color: white;
-        display: flex;      /* ★ 中央配置 */
+        display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 8px 0 0 8px;
@@ -265,7 +263,6 @@
     <button class="arrow right">→</button>
 </div>
 
-<div class="toggle-carousel">▶</div>
 <div class="show-carousel">◀</div>
 
 <script>
@@ -288,7 +285,6 @@ const works = {
     all: []
 };
 
-/* カテゴリ番号 */
 const categoryNumber = {
     illustration: 1,
     character: 2,
@@ -298,7 +294,6 @@ const categoryNumber = {
     other: 6
 };
 
-/* all を自動生成 */
 Object.keys(works).forEach(cat => {
     if (cat === "all") return;
     const num = categoryNumber[cat];
@@ -323,7 +318,6 @@ function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
 }
 
-/* 枠は常に固定に戻す */
 function updateFrameClass() {
     const frame = document.querySelector(".img-frame");
     frame.className = "img-frame";
@@ -377,13 +371,13 @@ function updateDisplay() {
 updateDisplay();
 updateCarousel();
 
-/* シークバー隠しボタン */
+/* 隠すボタン */
 document.querySelector(".toggle-carousel").addEventListener("click", () => {
     document.querySelector(".work-carousel").classList.add("hidden");
-    document.querySelector(".show-carousel").style.display = "block";
+    document.querySelector(".show-carousel").style.display = "flex";
 });
 
-/* シークバー再表示ボタン */
+/* 表示ボタン */
 document.querySelector(".show-carousel").addEventListener("click", () => {
     document.querySelector(".work-carousel").classList.remove("hidden");
     document.querySelector(".show-carousel").style.display = "none";
