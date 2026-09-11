@@ -96,7 +96,7 @@
         height: 110px;
         border-radius: 50%;
         z-index: -1;
-        transition: 0.3s;
+        transition: transform 0.12s ease;
     }
 
     /* 柔らかい赤・青・黄・緑・紫 */
@@ -105,6 +105,10 @@
     .ball:nth-of-type(3) { background: #fff59a; }
     .ball:nth-of-type(4) { background: #9affc6; }
     .ball:nth-of-type(5) { background: #d59aff; }
+
+    /* 反射時のぷにっと演出 */
+    .ball.squash-x { transform: scaleX(0.8); }
+    .ball.squash-y { transform: scaleY(0.8); }
 
     /* ===== ボタン化 ===== */
     .ball.to-button {
@@ -119,6 +123,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        transform: none !important;
     }
 </style>
 </head>
@@ -167,21 +172,20 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     let timeout;
 
     /* ===== 反射枠の設定 ===== */
-    const leftLimit = window.innerWidth * 0.40;  // イラスト25の右端
-    const rightLimit = window.innerWidth;        // 画面右端
+    const leftLimit = window.innerWidth * 0.40;
+    const rightLimit = window.innerWidth;
     const topLimit = 0;
     const bottomLimit = window.innerHeight;
 
     const speeds = [];
 
     balls.forEach((ball, i) => {
-        // 初期位置（反射枠内でランダム）
         let x = leftLimit + Math.random() * (rightLimit - leftLimit - 110);
         let y = Math.random() * (bottomLimit - 110);
 
-        // 端まで届く強さの速度
-        let vx = (Math.random() * 8 + 6) * (Math.random() < 0.5 ? -1 : 1);
-        let vy = (Math.random() * 8 + 6) * (Math.random() < 0.5 ? -1 : 1);
+        /* ★速度を落とす（ゆっくり端まで行く） */
+        let vx = (Math.random() * 3 + 2) * (Math.random() < 0.5 ? -1 : 1);
+        let vy = (Math.random() * 3 + 2) * (Math.random() < 0.5 ? -1 : 1);
 
         speeds.push({ x, y, vx, vy });
 
@@ -196,28 +200,40 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
             s.x += s.vx;
             s.y += s.vy;
 
-            // 左端（イラスト25の右端）
+            /* ===== 左端（イラスト25右端） ===== */
             if (s.x < leftLimit) {
                 s.x = leftLimit;
                 s.vx *= -1;
+
+                ball.classList.add("squash-x");
+                setTimeout(() => ball.classList.remove("squash-x"), 120);
             }
 
-            // 右端
+            /* ===== 右端 ===== */
             if (s.x > rightLimit - 110) {
                 s.x = rightLimit - 110;
                 s.vx *= -1;
+
+                ball.classList.add("squash-x");
+                setTimeout(() => ball.classList.remove("squash-x"), 120);
             }
 
-            // 上端
+            /* ===== 上端 ===== */
             if (s.y < topLimit) {
                 s.y = topLimit;
                 s.vy *= -1;
+
+                ball.classList.add("squash-y");
+                setTimeout(() => ball.classList.remove("squash-y"), 120);
             }
 
-            // 下端
+            /* ===== 下端 ===== */
             if (s.y > bottomLimit - 110) {
                 s.y = bottomLimit - 110;
                 s.vy *= -1;
+
+                ball.classList.add("squash-y");
+                setTimeout(() => ball.classList.remove("squash-y"), 120);
             }
 
             ball.style.left = s.x + "px";
@@ -242,7 +258,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
     document.addEventListener("click", (e) => {
         if (e.target.closest("header") || e.target.closest(".about-img")) return;
 
-        cancelAnimationFrame(animationId); // ★動きを完全停止
+        cancelAnimationFrame(animationId);
 
         balls.forEach((ball, i) => {
             ball.classList.add("to-button");
@@ -262,7 +278,7 @@ Vtuber向けイラスト、キービジュアル、キャラクターデザイ�
                 ball.textContent = "";
             });
 
-            animate(); // ★反射アニメーション再開
+            animate();
         }, 5000);
     });
 </script>
