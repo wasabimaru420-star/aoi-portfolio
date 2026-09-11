@@ -221,14 +221,17 @@
         transform: scale(1.1);
     }
 
-    /* モーダル画像のイベントを無効化（戻るボタン・ズーム・ドラッグを有効にする） */
     #modal-img {
         pointer-events: none;
     }
 
-    /* モーダル内のスクロール挙動を安定させる */
     #img-modal {
         overflow: hidden;
+    }
+
+    /* ★追加：イラスト150だけサイズを小さくする */
+    #main-work-img[src="img/イラスト150.webp"] {
+        max-height: 60vh;
     }
 </style>
 </head>
@@ -278,7 +281,6 @@
 
 <div class="show-carousel">◀</div>
 
-<!-- 画像拡大表示モーダル -->
 <div id="img-modal" style="
     display:none;
     position:fixed;
@@ -298,7 +300,6 @@
         border-radius:10px;
     ">
 
-    <!-- モーダル右下の戻るボタン -->
     <button id="modal-close-btn" style="
         position:absolute;
         bottom:20px;
@@ -315,11 +316,12 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+
     const works = {
         vtuber: [
-            { src: "img/イラスト196.webp", desc: "「葵山葵。」\n自身の代理キャラクターとして生み出した存在であり、個人的な理想と現実を融合させた体。" },
-            { src: "img/イラスト148.webp", desc: "「風龍（かざり）」\n十二支をモチーフとしてVtuberを作り出す企画の最初の一人。\n辰×風神がモチーフとなっており、雷蛇とは対となる存在。" },
-            { src: "img/イラスト150.webp", desc: "「雷蛇（かんだ）」\n十二支をモチーフとしてVtuberを作り出す企画の二人目。\n蛇×雷神がモチーフとなっており、風龍とは対となる存在。" }
+            { src: "img/イラスト196.webp", desc: "「葵山葵。」\n自身の代理キャラクターとして生み出した存在であり、個人的な理想と現実を融合させた体。", position: "center top" },   /* ★追加 */
+            { src: "img/イラスト148.webp", desc: "「風龍（かざり）」\n十二支をモチーフとしてVtuberを作り出す企画の最初の一人。\n辰×風神がモチーフとなっており、雷蛇とは対となる存在。", position: "center 20%" }, /* ★追加 */
+            { src: "img/イラスト150.webp", desc: "「雷蛇（かんだ）」\n十二支をモチーフとしてVtuberを作り出す企画の二人目。\n蛇×雷神がモチーフとなっており、風龍とは対となる存在。", position: "center 30%" } /* ★追加 */
         ],
 
         keyvisual: [
@@ -418,6 +420,9 @@ window.addEventListener("DOMContentLoaded", () => {
             mainImg.classList.remove("keyvisual-img");
         }
 
+        /* ★追加：作品ごとの object-position を反映 */
+        mainImg.style.objectPosition = w.position || "center";
+
         mainImg.style.width = "auto";
         mainImg.style.height = "auto";
         mainImg.style.objectFit = "contain";
@@ -426,19 +431,16 @@ window.addEventListener("DOMContentLoaded", () => {
     updateDisplay();
     updateCarousel();
 
-    /* 隠すボタン */
     document.querySelector(".toggle-carousel").addEventListener("click", () => {
         document.querySelector(".work-carousel").classList.add("hidden");
         document.querySelector(".show-carousel").style.display = "flex";
     });
 
-    /* 表示ボタン */
     document.querySelector(".show-carousel").addEventListener("click", () => {
         document.querySelector(".work-carousel").classList.remove("hidden");
         document.querySelector(".show-carousel").style.display = "none";
     });
 
-    /* 左右ボタン */
     document.querySelector(".arrow.left").addEventListener("click", () => {
         currentIndex = (currentIndex - 1 + works[currentCategory].length) % works[currentCategory].length;
         updateDisplay();
@@ -449,7 +451,6 @@ window.addEventListener("DOMContentLoaded", () => {
         updateDisplay();
     });
 
-    /* 画像クリックで拡大表示 */
     mainImg.addEventListener("click", () => {
         const modal = document.getElementById("img-modal");
         const modalImg = document.getElementById("modal-img");
@@ -458,7 +459,6 @@ window.addEventListener("DOMContentLoaded", () => {
         modal.style.display = "flex";
     });
 
-    /* モーダル内の画像操作（ズーム＋ドラッグ） */
     const modal = document.getElementById("img-modal");
     const modalImg = document.getElementById("modal-img");
     const closeBtn = document.getElementById("modal-close-btn");
@@ -470,7 +470,6 @@ window.addEventListener("DOMContentLoaded", () => {
     let imgX = 0;
     let imgY = 0;
 
-    /* ズーム（スクロール） */
     modal.addEventListener("wheel", (e) => {
         e.preventDefault();
         scale += e.deltaY * -0.001;
@@ -478,14 +477,12 @@ window.addEventListener("DOMContentLoaded", () => {
         modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
     });
 
-    /* ドラッグ開始（長押し） */
     modal.addEventListener("mousedown", (e) => {
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
     });
 
-    /* ドラッグ中 */
     modal.addEventListener("mousemove", (e) => {
         if (!isDragging) return;
         imgX += (e.clientX - startX) * 0.5;
@@ -495,12 +492,10 @@ window.addEventListener("DOMContentLoaded", () => {
         modalImg.style.transform = `translate(${imgX}px, ${imgY}px) scale(${scale})`;
     });
 
-    /* ドラッグ終了 */
     modal.addEventListener("mouseup", () => {
         isDragging = false;
     });
 
-    /* 戻るボタンで閉じる */
     closeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         modal.style.display = "none";
