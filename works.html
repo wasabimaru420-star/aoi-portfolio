@@ -96,17 +96,27 @@
         gap: 40px;
     }
 
-    /* ★画像の「枠」を統一する */
+    /* ★画像枠（カテゴリごとに調整可能） */
     .img-frame {
-        width: 700px;      /* 枠の横幅を統一 */
-        height: 900px;     /* 枠の縦幅を統一 */
+        width: 700px;
+        height: 900px;
         display: flex;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
     }
 
-    /* ★画像自体の大きさは今のまま（触らない） */
+    /* vtuber専用枠（同じサイズで統一） */
+    .img-frame.vtuber-frame {
+        width: 700px;
+        height: 900px;
+    }
+
+    /* keyvisual の位置を少し上げる */
+    .img-frame.keyvisual-frame {
+        margin-top: -40px;
+    }
+
     #main-work-img {
         width: auto;
         height: auto;
@@ -141,6 +151,30 @@
         background: rgba(0,0,0,0.4);
         backdrop-filter: blur(10px);
         z-index: 900;
+        transition: 0.4s;
+    }
+
+    .work-carousel.hidden {
+        transform: translateX(300px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .toggle-carousel {
+        position: fixed;
+        right: 240px;
+        bottom: 200px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        z-index: 1001;
+        transition: 0.3s;
+    }
+
+    .toggle-carousel:hover {
+        background: rgba(255,255,255,0.4);
     }
 
     .arrow {
@@ -207,7 +241,6 @@
     </aside>
 
     <main class="work-display">
-        <!-- ★画像を枠で囲む -->
         <div class="img-frame">
             <img id="main-work-img" src="img/イラスト148.webp">
         </div>
@@ -215,6 +248,8 @@
     </main>
 
 </div>
+
+<div class="toggle-carousel">▶</div>
 
 <div class="work-carousel">
     <button class="arrow left">←</button>
@@ -242,6 +277,36 @@ const works = {
     all: []
 };
 
+/* カテゴリ番号 */
+const categoryNumber = {
+    illustration: 1,
+    character: 2,
+    vtuber: 3,
+    keyvisual: 4,
+    minicharacter: 5,
+    other: 6
+};
+
+/* 顔位置調整 */
+const facePosition = {
+    "img/イラスト148.webp": "center top",
+    "img/イラスト150.webp": "center top",
+    "img/イラスト196.webp": "center top"
+};
+
+/* all を自動生成 */
+Object.keys(works).forEach(cat => {
+    if (cat === "all") return;
+    const num = categoryNumber[cat];
+    works[cat].forEach((w, i) => {
+        w.code = `${num}-${i+1}`;
+        works.all.push({
+            src: w.src,
+            desc: `${w.desc}（${w.code}）`
+        });
+    });
+});
+
 let currentCategory = "vtuber";
 let currentIndex = 0;
 
@@ -252,6 +317,22 @@ const blurBg = document.querySelector(".blur-bg");
 
 function updateBackground(src) {
     blurBg.style.backgroundImage = `url(${src})`;
+}
+
+function updateFrameClass() {
+    const frame = document.querySelector(".img-frame");
+    frame.className = "img-frame";
+
+    if (currentCategory === "vtuber") frame.classList.add("vtuber-frame");
+    if (currentCategory === "keyvisual") frame.classList.add("keyvisual-frame");
+}
+
+function updateFacePosition(src) {
+    if (facePosition[src]) {
+        mainImg.style.objectPosition = facePosition[src];
+    } else {
+        mainImg.style.objectPosition = "center";
+    }
 }
 
 document.querySelectorAll(".category").forEach(cat => {
@@ -292,8 +373,9 @@ function updateDisplay() {
     description.textContent = w.desc;
 
     updateBackground(w.src);
+    updateFrameClass();
+    updateFacePosition(w.src);
 
-    /* 画像のサイズは一切いじらない */
     mainImg.style.width = "auto";
     mainImg.style.height = "auto";
     mainImg.style.objectFit = "contain";
@@ -310,6 +392,11 @@ document.querySelector(".arrow.left").addEventListener("click", () => {
 document.querySelector(".arrow.right").addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % works[currentCategory].length;
     updateDisplay();
+});
+
+/* シークバー隠しボタン */
+document.querySelector(".toggle-carousel").addEventListener("click", () => {
+    document.querySelector(".work-carousel").classList.toggle("hidden");
 });
 </script>
 
